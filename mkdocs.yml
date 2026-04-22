@@ -1,7 +1,7 @@
 site_name: 한밭푸드 ACA 이관 실습
 site_description: Azure Container Apps 13시간 강의 · 학생용 실습 가이드
 site_author: Skilleat
-site_url: https://example.github.io/hanbat-aca-labs/
+site_url: https://skilleat-labs.github.io/container-service-labs/
 
 theme:
   name: material
