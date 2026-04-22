@@ -1,0 +1,125 @@
+site_name: 한밭푸드 ACA 이관 실습
+site_description: Azure Container Apps 13시간 강의 · 학생용 실습 가이드
+site_author: Skilleat
+site_url: https://example.github.io/hanbat-aca-labs/
+
+theme:
+  name: material
+  language: ko
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: 다크 모드로 전환
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: 라이트 모드로 전환
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.follow
+  font:
+    text: Pretendard
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+extra_javascript:
+  - assets/javascripts/extra.js
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+      toc_depth: 3
+
+plugins:
+  - search:
+      lang:
+        - ko
+        - en
+  - minify:
+      minify_html: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/youtube
+      link: https://youtube.com/@feeltechedu
+      name: 감테크 YouTube
+  generator: false
+
+copyright: Copyright &copy; 2026 Skilleat &middot; 본 자료는 교육 목적으로만 사용 가능
+
+nav:
+  - 시작하기: index.md
+  - 개요:
+    - 한밭푸드 시나리오: scenario.md
+    - AS-IS vs TO-BE 아키텍처: architecture.md
+    - 13시간 커리큘럼: curriculum.md
+  - 'Phase 0 · 시작':
+    - Phase 0 개요: phase-0/index.md
+    - 환경 세팅: phase-0/environment-setup.md
+  - 'Phase 1 · AS-IS':
+    - Phase 1 개요: phase-1/index.md
+    - AS-IS 환경 체험: phase-1/as-is-docker-compose.md
+  - 'Phase 2 · 고통 체험':
+    - Phase 2 개요: phase-2/index.md
+    - '고통 1: 배포 지옥': phase-2/pain-1-deploy-hell.md
+    - '고통 2: 스케일 불가': phase-2/pain-2-scale-fail.md
+    - '고통 3: 점진 배포 불가': phase-2/pain-3-no-canary.md
+  - 'Phase 3 · 첫 이관':
+    - Phase 3 개요: phase-3/index.md
+    - ACR 생성 및 이미지 푸시: phase-3/docker-hub-push.md
+    - ACA 환경 생성: phase-3/environment-create.md
+    - API 앱 배포: phase-3/api-deploy.md
+    - Web 앱 배포: phase-3/web-deploy.md
+  - 'Phase 4 · 재경기':
+    - Phase 4 개요: phase-4/index.md
+    - 무중단 배포: phase-4/zero-downtime-deploy.md
+    - 자동 확장: phase-4/auto-scale.md
+  - 'Phase 5 · 의사결정':
+    - Phase 5 개요: phase-5/index.md
+    - 비교 매트릭스: phase-5/decision-matrix.md
+  - 평가:
+    - 평가 개요: evaluation/index.md
+    - 제출 가이드: evaluation/submission-guide.md
+  - 참고 자료:
+    - 자주 만나는 오류: reference/common-errors.md
+    - 유용한 명령어 모음: reference/useful-commands.md

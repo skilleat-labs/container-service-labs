@@ -1,0 +1,251 @@
+/* =============================================
+   감테크 브랜드 컬러 & 커스텀 컴포넌트
+   ============================================= */
+
+/* Google Fonts — Pretendard */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+
+:root {
+  --md-primary-fg-color: #1A1A35;
+  --md-primary-fg-color--light: #2B4FE8;
+  --md-primary-fg-color--dark: #0E0E21;
+  --md-accent-fg-color: #2B4FE8;
+  --md-text-font: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #2B4FE8;
+  --md-accent-fg-color: #6E88F0;
+  --md-default-bg-color: #0F0F1E;
+}
+
+/* =============================================
+   Phase 배지
+   ============================================= */
+.phase-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--md-primary-fg-color);
+  color: #FFF;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* =============================================
+   예상 시간 배지
+   ============================================= */
+.time-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #FFF8E1;
+  color: #BA7517;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  border: 1px solid #F0DAA8;
+  vertical-align: middle;
+}
+
+[data-md-color-scheme="slate"] .time-badge {
+  background: #2A2000;
+  color: #F0C040;
+  border-color: #5A4000;
+}
+
+/* =============================================
+   체크포인트 박스
+   ============================================= */
+.checkpoint {
+  padding: 16px 20px;
+  background: #E8F5E9;
+  border-left: 4px solid #1D9E75;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.checkpoint-title {
+  font-weight: 700;
+  color: #0E5A42;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+[data-md-color-scheme="slate"] .checkpoint {
+  background: #0D2018;
+  border-left-color: #1D9E75;
+}
+
+[data-md-color-scheme="slate"] .checkpoint-title {
+  color: #4ECBA0;
+}
+
+/* =============================================
+   고통 체험 박스
+   ============================================= */
+.pain-box {
+  padding: 16px 20px;
+  background: #FCE4E4;
+  border-left: 4px solid #E84B4B;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.pain-box-title {
+  font-weight: 700;
+  color: #8B0000;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+[data-md-color-scheme="slate"] .pain-box {
+  background: #250A0A;
+  border-left-color: #E84B4B;
+}
+
+[data-md-color-scheme="slate"] .pain-box-title {
+  color: #FF8080;
+}
+
+/* =============================================
+   표 스타일
+   ============================================= */
+.md-typeset table:not([class]) {
+  font-size: 14px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--md-primary-fg-color);
+  color: #FFF;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) {
+  background: rgba(43, 79, 232, 0.04);
+}
+
+/* =============================================
+   네비게이션 탭 강조
+   ============================================= */
+.md-tabs__link--active {
+  font-weight: 700;
+}
+
+/* =============================================
+   코드 블록
+   ============================================= */
+.md-typeset code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85em;
+}
+
+/* =============================================
+   페이지 하단 이동 버튼 (커스텀)
+   ============================================= */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  gap: 16px;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none !important;
+  border: 2px solid var(--md-primary-fg-color--light);
+  color: var(--md-primary-fg-color--light) !important;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background: var(--md-primary-fg-color--light);
+  color: #FFF !important;
+}
+
+.nav-btn.next {
+  margin-left: auto;
+  background: var(--md-primary-fg-color);
+  color: #FFF !important;
+  border-color: var(--md-primary-fg-color);
+}
+
+.nav-btn.next:hover {
+  background: var(--md-primary-fg-color--light);
+  border-color: var(--md-primary-fg-color--light);
+}
+
+/* =============================================
+   히어로 섹션 (index.md)
+   ============================================= */
+.hero-section {
+  text-align: center;
+  padding: 40px 20px 32px;
+  margin-bottom: 32px;
+  background: linear-gradient(135deg, #1A1A35 0%, #2B4FE8 100%);
+  border-radius: 12px;
+  color: #FFF;
+}
+
+.hero-section h1 {
+  color: #FFF !important;
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.hero-section p {
+  color: rgba(255,255,255,0.85);
+  font-size: 1.1rem;
+}
+
+/* Phase 타임라인 */
+.phase-timeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.phase-card {
+  flex: 1;
+  min-width: 140px;
+  padding: 14px 16px;
+  border: 2px solid rgba(43, 79, 232, 0.2);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.phase-card .phase-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: #2B4FE8;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.phase-card .phase-name {
+  font-size: 13px;
+  font-weight: 600;
+  display: block;
+}
+
+.phase-card .phase-time {
+  font-size: 11px;
+  color: #888;
+  font-family: 'JetBrains Mono', monospace;
+  display: block;
+  margin-top: 4px;
+}
