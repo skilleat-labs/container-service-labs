@@ -224,6 +224,6 @@ Azure 백엔드에서 Log Analytics Workspace와 ACA 환경을 함께 프로비�
 ## 다음 단계
 
 <div class="nav-buttons">
-<a href="../docker-hub-push/" class="nav-btn">← Docker Hub 푸시</a>
+<a href="../acr-push/" class="nav-btn">← ACR 이미지 푸시</a>
 <a href="../api-deploy/" class="nav-btn next">API 앱 배포 →</a>
 </div>

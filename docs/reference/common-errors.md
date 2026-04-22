@@ -72,22 +72,22 @@ newgrp docker
 </details>
 
 <details>
-<summary>❌ Docker Hub push: "denied: requested access to the resource is denied"</summary>
+<summary>❌ ACR push: "unauthorized: authentication required"</summary>
 
-**원인**: 로그인 안 됨 or 이미지 이름의 계정명이 틀림
+**원인**: ACR 로그인 세션 만료 또는 로그인 안 됨
 
 **해결**:
 
 ```bash
-# 로그인 확인
-docker info | grep Username
+# ACR 재로그인
+az acr login --name $ACR_NAME
 
-# 재로그인
-docker logout
-docker login
-
-# 이미지 이름 확인 (yourid 부분이 본인 Docker Hub ID여야 함)
+# 이미지 태그 확인 (ACR_SERVER 포함 여부)
 docker images | grep hanbat
+
+# ACR_SERVER 변수 재설정
+export ACR_SERVER=$(az acr show --name $ACR_NAME --query loginServer --output tsv)
+echo $ACR_SERVER
 ```
 
 </details>

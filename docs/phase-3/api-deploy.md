@@ -50,7 +50,7 @@ export ACR_SERVER=$(az acr show \
 
        | 항목 | 값 |
        |------|-----|
-       | 이미지 소스 | Docker Hub 또는 기타 레지스트리 |
+       | 이미지 소스 | Azure Container Registry |
        | 이미지 및 태그 | `<ACR_SERVER>/hanbat-order-api:v1.0.0` |
        | CPU 및 메모리 | 0.25 CPU, 0.5Gi |
 

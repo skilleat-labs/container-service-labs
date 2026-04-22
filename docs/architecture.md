@@ -64,14 +64,14 @@ graph TB
         API2 --- DB2
       end
     end
-    DH["Docker Hub\nskilleat/hanbat-order-web\nskilleat/hanbat-order-api"]
+    ACR["Azure Container Registry\nhanbatacr.azurecr.io\nhanbat-order-web:v2.0.0\nhanbat-order-api:v1.0.0"]
     KEDA["KEDA\n(자동 스케일러)"]
   end
 
   Internet["인터넷"] -->|"HTTPS"| Web2
   Web2 -->|"내부 네트워크"| API2
-  DH -->|"이미지 Pull"| Web2
-  DH -->|"이미지 Pull"| API2
+  ACR -->|"이미지 Pull"| Web2
+  ACR -->|"이미지 Pull"| API2
   KEDA -->|"트래픽 기반 스케일"| API2
 
   style Web2 fill:#D6EAF8,stroke:#2B4FE8

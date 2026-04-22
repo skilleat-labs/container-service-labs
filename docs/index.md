@@ -71,7 +71,7 @@
 - [ ] 강사가 공유한 **VM IP 주소**와 **비밀번호** 확보
 - [ ] SSH 클라이언트 준비 (Windows: PowerShell / Mac·Linux: Terminal)
 - [ ] **Azure 계정** 생성 완료 (개인 계정 또는 강의 제공 계정)
-- [ ] **Docker Hub 계정** 생성 완료 ([hub.docker.com](https://hub.docker.com))
+- [ ] **Azure 구독**에서 Container Registry 사용 권한 확인 (강사 안내 참고)
 - [ ] 브라우저 탭 열어두기: Azure Portal ([portal.azure.com](https://portal.azure.com))
 
 !!! warning "Azure 계정 없이는 Phase 3부터 진행 불가"

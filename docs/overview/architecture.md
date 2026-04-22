@@ -59,21 +59,21 @@ graph TB
       API2["hanbat-api\nInternal Ingress\n(ACA 환경 내부에서만 접근)"]
       DB2["SQLite DB\n(컨테이너 내부)"]
     end
-    DH["Docker Hub\nskilleat/hanbat-order-web\nskilleat/hanbat-order-api"]
+    ACR["Azure Container Registry\nhanbatacr.azurecr.io\nhanbat-order-web:v2.0.0\nhanbat-order-api:v1.0.0"]
     KEDA["KEDA\n(자동 스케일러)"]
   end
 
   Internet["인터넷"] -->|"HTTPS"| Web2
   Web2 -->|"내부 네트워크"| API2
   API2 --> DB2
-  DH -->|"이미지 Pull"| Web2
-  DH -->|"이미지 Pull"| API2
+  ACR -->|"이미지 Pull"| Web2
+  ACR -->|"이미지 Pull"| API2
   KEDA -->|"트래픽 기반 스케일"| API2
 
   style Web2 fill:#D6EAF8,stroke:#2B4FE8
   style API2 fill:#D5F5E3,stroke:#1D9E75
   style DB2 fill:#FEF9E7,stroke:#F39C12
-  style DH fill:#EDE7F6,stroke:#7E57C2
+  style ACR fill:#EDE7F6,stroke:#7E57C2
   style KEDA fill:#FCE4EC,stroke:#E91E63
 ```
 
