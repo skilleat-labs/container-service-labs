@@ -203,10 +203,25 @@ export ACR_SERVER=$(az acr show \
 echo $ACR_SERVER   # hanbatacr12345.azurecr.io
 ```
 
-**이미지 Pull (Docker Hub → VM):**
+**이미지 확인:**
+
+Phase 2 실습을 진행했다면 v2 이미지까지 이미 VM에 있습니다.
 
 ```bash title="터미널"
-# Phase 1에서 api:v1만 받아졌으므로 v2와 web:v2는 새로 Pull
+docker images | grep hanbat
+```
+
+```console title="출력"
+skilleat/hanbat-order-api   v2.0.0   ...
+skilleat/hanbat-order-api   v1.0.0   ...
+skilleat/hanbat-order-web   v2.0.0   ...
+```
+
+목록에 없는 이미지가 있다면 그것만 pull합니다.
+
+```bash title="터미널"
+# 없는 이미지만 선택해서 실행
+docker pull skilleat/hanbat-order-api:v1.0.0
 docker pull skilleat/hanbat-order-api:v2.0.0
 docker pull skilleat/hanbat-order-web:v2.0.0
 ```
