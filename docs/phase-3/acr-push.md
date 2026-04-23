@@ -162,6 +162,22 @@ echo $ACR_NAME   # 나중에 필요하니 메모해두세요
 
 ## Step 3. ACR 로그인
 
+`az login`으로 Azure에 이미 로그인했는데 왜 또 로그인할까요?
+
+`az login`은 **Azure 리소스를 관리**하는 권한입니다 (리소스 그룹 생성, ACR 만들기 등).
+반면 `docker push`는 **Docker 데몬**이 실행하는 명령이라 Azure 로그인 정보를 모릅니다.
+
+`az acr login`은 ACR 자격증명을 받아서 **Docker에게 전달**하는 역할을 합니다.
+이 과정이 없으면 `docker push` 시 인증 오류가 발생합니다.
+
+```
+az login      → Azure CLI 인증  (리소스 관리 권한)
+                      ↓
+az acr login  → Docker 데몬에 ACR 자격증명 등록  (이미지 push/pull 권한)
+                      ↓
+docker push   → ACR에 이미지 업로드 성공
+```
+
 ```bash title="터미널"
 az acr login --name $ACR_NAME
 ```
