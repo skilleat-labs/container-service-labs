@@ -1,5 +1,5 @@
 <span class="phase-badge">PHASE 3</span>
-<span class="time-badge">예상 120분</span>
+<span class="time-badge">예상 140분</span>
 
 # Phase 3 · 첫 이관
 
@@ -15,6 +15,7 @@
 | 단계 | 내용 | 소요 시간 |
 |------|------|-----------|
 | [ACR 생성 및 이미지 푸시](acr-push.md) | ACR 생성 + 이미지 태그 + Push | 20분 |
+| [ACI Smoke Test](aci-smoke-test.md) | Managed Identity 생성 + ACI로 이미지 동작 확인 | 20분 |
 | [ACA 환경 생성](environment-create.md) | Resource Group + ACA Environment | 20분 |
 | [API 앱 배포](api-deploy.md) | Internal Ingress API 배포 | 40분 |
 | [Web 앱 배포](web-deploy.md) | External Ingress Web 배포 + 접속 확인 | 40분 |

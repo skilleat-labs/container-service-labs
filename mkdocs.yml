@@ -107,6 +107,7 @@ nav:
   - 'Phase 3 · 첫 이관':
     - Phase 3 개요: phase-3/index.md
     - ACR 생성 및 이미지 푸시: phase-3/acr-push.md
+    - ACI Smoke Test: phase-3/aci-smoke-test.md
     - ACA 환경 생성: phase-3/environment-create.md
     - API 앱 배포: phase-3/api-deploy.md
     - Web 앱 배포: phase-3/web-deploy.md
