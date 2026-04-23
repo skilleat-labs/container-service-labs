@@ -95,69 +95,38 @@ az provider show --namespace Microsoft.App --query registrationState
 
 ## Step 4. ACA 환경 생성
 
-=== "포털"
+CLI로 생성합니다. 2~5분 소요됩니다.
 
-    1. 검색창에 **Container Apps 환경** 검색 → 클릭
-    2. **+ 만들기** 클릭
-    3. 기본 사항 입력:
-       - 구독: 본인 구독
-       - 리소스 그룹: `hanbat-rg`
-       - 이름: `hanbat-env`
-       - 지역: **Korea Central**
-    4. 모니터링 탭: Log Analytics 새로 만들기 (기본값 유지)
-    5. **검토 + 만들기** → **만들기**
+```bash title="터미널"
+az containerapp env create \
+  --name $ACA_ENV \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION
+```
 
-    생성 완료까지 2~5분 소요됩니다.
+```json title="응답"
+{
+  "name": "hanbat-env",
+  "properties": {
+    "provisioningState": "Succeeded"
+  }
+}
+```
 
-    ![ACA 환경 생성 화면](../assets/images/phase-3/env-create.png)
+---
 
-=== "CLI"
+## Step 5. Portal에서 확인
 
-    ```bash title="터미널"
-    az containerapp env create \
-      --name $ACA_ENV \
-      --resource-group $RESOURCE_GROUP \
-      --location $LOCATION
-    ```
+Azure Portal에서 제대로 생성됐는지 눈으로 확인합니다.
 
-    2~5분 소요. 완료되면:
+1. [portal.azure.com](https://portal.azure.com) → 검색창에 **Container Apps 환경** 검색
+2. 목록에 `hanbat-env` 가 보이면 성공입니다
 
-    ```json title="응답"
-    {
-      "name": "hanbat-env",
-      "properties": {
-        "provisioningState": "Succeeded"
-      }
-    }
-    ```
+![ACA 환경 생성 확인](../assets/images/phase-3/env-create.png)
 
 <div class="checkpoint">
 <div class="checkpoint-title">✅ 확인 포인트</div>
-
-```bash title="터미널"
-az containerapp env list \
-  --resource-group $RESOURCE_GROUP \
-  --output table
-```
-
-```console title="출력"
-Location       Name        ResourceGroup
--------------  ----------  ---------------
-Korea Central  hanbat-env  hanbat-rg
-```
-
-목록에 `hanbat-env` 가 표시되면 정상입니다. 상세 상태를 확인하려면:
-
-```bash title="터미널"
-az containerapp env show \
-  --name $ACA_ENV \
-  --resource-group $RESOURCE_GROUP \
-  --query "properties.provisioningState"
-```
-
-```console title="출력"
-"Succeeded"
-```
+Portal 목록에 <code>hanbat-env</code>가 보이고, 상태가 <strong>Succeeded</strong>이면 완료입니다.
 </div>
 
 ---
