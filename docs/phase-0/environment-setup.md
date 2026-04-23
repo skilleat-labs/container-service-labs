@@ -71,7 +71,7 @@ Azure Portal 검색창에 **가상 머신**을 검색하고 **+ 만들기** → 
 | 가상 머신 이름 | `hanbat-lab-vm` |
 | 지역 | **(Asia Pacific) Korea Central** |
 | 가용성 옵션 | 인프라 중복 필요 없음 |
-| 이미지 | **Ubuntu Server 22.04 LTS - x64 Gen2** |
+| 이미지 | **Ubuntu Server 22.04 LTS - x64 Gen2** (또는 24.04 LTS) |
 | 크기 | **Standard_B2s** (2 vCPU, 4GiB) |
 
 **관리자 계정** 섹션:
@@ -81,6 +81,9 @@ Azure Portal 검색창에 **가상 머신**을 검색하고 **+ 만들기** → 
 | 인증 형식 | **암호** |
 | 사용자 이름 | `labuser` |
 | 암호 | 본인이 기억할 수 있는 비밀번호 설정 |
+
+!!! tip "이미지 버전"
+    목록에서 22.04가 바로 보이지 않으면 24.04 LTS를 선택해도 됩니다. User Data 스크립트는 두 버전 모두 동일하게 동작합니다.
 
 !!! warning "사용자 이름은 반드시 `labuser`"
     아래 User Data 스크립트가 `labuser` 계정을 기준으로 설정됩니다. 다른 이름을 사용하면 스크립트가 올바르게 동작하지 않습니다.

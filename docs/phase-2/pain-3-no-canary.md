@@ -46,7 +46,16 @@ docker run -d \
   skilleat/hanbat-order-api:v2.0.0
 ```
 
-이제 v1(8080), v2(8081) 두 API가 동시에 뜨긴 합니다. 그런데...
+이제 v1(8080), v2(8081) 두 API가 동시에 뜨긴 합니다.
+
+브라우저에서 각각 `/version`을 열어보면 다른 버전이 떠 있는 걸 직접 확인할 수 있습니다.
+
+```
+http://<VM_IP>:8080/version   → {"version": "1.0.0", ...}
+http://<VM_IP>:8081/version   → {"version": "2.0.0", ...}
+```
+
+v1과 v2가 동시에 살아있습니다. 그런데...
 
 <div class="pain-box">
 <div class="pain-box-title">🔥 트래픽을 80:20으로 나눌 방법이 없습니다</div>
