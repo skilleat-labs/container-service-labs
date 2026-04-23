@@ -250,6 +250,8 @@ docker push ${ACR_SERVER}/hanbat-order-web:v2.0.0
 
 ## Step 5. Push 확인
 
+### CLI 확인
+
 ```bash title="터미널"
 az acr repository list \
   --name $ACR_NAME \
@@ -290,9 +292,24 @@ Result
 v2.0.0
 ```
 
-!!! tip "Portal에서 확인하기"
-    Azure Portal → **컨테이너 레지스트리** → `hanbatacr...` 선택 → 왼쪽 메뉴 **서비스** 섹션 → **리포지토리** 클릭
-    → `hanbat-order-api`, `hanbat-order-web` 두 리포지토리와 각 태그가 보이면 Push 성공입니다.
+### Azure Portal에서 눈으로 확인 (필수)
+
+CLI 결과만으로는 실제로 이미지가 잘 올라갔는지 확신하기 어렵습니다.
+**반드시 Portal에서 직접 눈으로 확인하세요.**
+
+1. [portal.azure.com](https://portal.azure.com) → 검색창에 **컨테이너 레지스트리** 검색
+2. 방금 만든 `hanbatacr...` 선택
+3. 왼쪽 메뉴 **서비스** 섹션 → **리포지토리** 클릭
+4. 아래와 같이 두 리포지토리가 보이면 성공입니다
+
+![ACR 리포지토리 목록](../../assets/acr-repo-list.png)
+
+| 리포지토리 | 태그 |
+|-----------|------|
+| `hanbat-order-api` | `v1.0.0`, `v2.0.0` |
+| `hanbat-order-web` | `v2.0.0` |
+
+각 리포지토리를 클릭하면 태그별 이미지 크기와 push 시각도 확인할 수 있습니다.
 
 <div class="checkpoint">
 <div class="checkpoint-title">✅ 확인 포인트</div>
