@@ -55,19 +55,21 @@ hanbat-api--def456-abc123   True      ← 현재 1개
 
 ## Step 3. 부하 생성
 
-`load-test.sh` 스크립트를 사용합니다.
+`WEB_URL`이 설정되지 않았다면 먼저 실행합니다.
+
+```bash title="터미널"
+WEB_URL=$(az containerapp show \
+  --name hanbat-web \
+  --resource-group $RESOURCE_GROUP \
+  --query "properties.configuration.ingress.fqdn" \
+  --output tsv)
+```
+
+`load-test.sh` 스크립트를 실행합니다.
 
 ```bash title="터미널"
 cd ~/hanbat-order-app
-bash scripts/load-test.sh <ACA_WEB_FQDN> 50 120
-```
-
-예시:
-
-```bash title="터미널 (예시)"
-bash scripts/load-test.sh \
-  hanbat-web.xxx.koreacentral.azurecontainerapps.io \
-  50 120
+bash scripts/load-test.sh $WEB_URL 50 120
 ```
 
 스크립트가 `meta.containerInstanceId` 변화를 실시간으로 출력합니다:
