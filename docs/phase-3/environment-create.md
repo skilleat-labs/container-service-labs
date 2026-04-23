@@ -93,43 +93,7 @@ az provider show --namespace Microsoft.App --query registrationState
 
 ---
 
-## Step 4. 리소스 그룹 생성
-
-=== "포털"
-
-    1. [portal.azure.com](https://portal.azure.com) 접속
-    2. 검색창에 **리소스 그룹** 검색 → 클릭
-    3. **+ 만들기** 클릭
-    4. 기본 사항 입력:
-       - 구독: 본인 구독 선택
-       - 리소스 그룹: `hanbat-rg`
-       - 지역: **Korea Central**
-    5. **검토 + 만들기** → **만들기**
-
-    ![리소스 그룹 생성 화면](../assets/images/phase-3/rg-create.png)
-
-=== "CLI"
-
-    ```bash title="터미널"
-    az group create \
-      --name $RESOURCE_GROUP \
-      --location $LOCATION
-    ```
-
-    ```json title="응답"
-    {
-      "id": "/subscriptions/xxx/resourceGroups/hanbat-rg",
-      "location": "koreacentral",
-      "name": "hanbat-rg",
-      "properties": {
-        "provisioningState": "Succeeded"
-      }
-    }
-    ```
-
----
-
-## Step 5. ACA 환경 생성
+## Step 4. ACA 환경 생성
 
 === "포털"
 
