@@ -108,7 +108,7 @@ https://hanbat-web.xxx.koreacentral.azurecontainerapps.io
 https://hanbat-web.xxx.koreacentral.azurecontainerapps.io
 ```
 
-한밭푸드 주문 조회 화면(초록 테마, v2)이 나오면 성공입니다.
+한밭푸드 주문 조회 화면(파란 테마)이 나오면 성공입니다. Phase 3에서는 hanbat-api v1이 배포되어 파란 테마로 표시됩니다. 초록 테마는 Phase 4에서 v2로 업데이트 후 확인합니다.
 
 ![ACA에서 동작하는 한밭푸드 주문 조회 화면](../assets/images/phase-3/web-success.png)
 
@@ -121,7 +121,7 @@ https://hanbat-web.xxx.koreacentral.azurecontainerapps.io
 <br>
 - [ ] `https://hanbat-web.xxx.azurecontainerapps.io` 접속 성공
 <br>
-- [ ] 주문 목록이 화면에 표시됨 (초록 테마, v2)
+- [ ] 주문 목록이 화면에 표시됨 (파란 테마, v1)
 <br>
 - [ ] 화면 캡처 저장 (평가 A-1, A-2)
 
