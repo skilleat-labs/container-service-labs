@@ -19,7 +19,7 @@ Smoke test 용도이므로 ACR의 **관리 사용자(Admin User)** 를 일시적
 2. 왼쪽 메뉴 → **설정** → **액세스 키**
 3. **관리 사용자** 토글을 **활성화**
 
-![ACR 관리 사용자 활성화](../../assets/images/phase-3/acr-admin-enable.png)
+![ACR 관리 사용자 활성화](../../assets/images/3-1.png)
 
 !!! info "관리 사용자란?"
     ACR에 이미지를 push/pull할 수 있는 관리자 계정입니다.

@@ -16,7 +16,8 @@
 | 10:30~10:45 | — | 휴식 | — |
 | 10:45~11:45 | Phase 2 | 고통 체험 — 배포 지옥, 스케일 한계, 점진 배포 불가 | 실습+강의 |
 | 11:45~13:00 | — | 점심 | — |
-| 13:00~15:00 | Phase 3 | 첫 이관 — ACR 이미지 푸시, ACA 환경·앱 생성 | 실습 |
+| 13:00~14:00 | Phase 3 | 첫 이관 — ACR 이미지 푸시 · ACI Smoke Test | 실습 |
+| 14:00~15:00 | Phase 3 | ACA 환경·앱 생성 | 실습 |
 | 15:00~15:15 | — | 휴식 | — |
 | 15:15~16:00 | Phase 3 | 이관 완료 · 동작 확인 · 트러블슈팅 | 실습 |
 
@@ -66,6 +67,7 @@
 **목표**: 주문 조회 시스템을 ACA에 배포한다
 
 - Azure Container Registry(ACR)에 이미지 Push
+- ACI Smoke Test — 이미지 정상 동작 확인 후 삭제
 - ACA 환경(Environment) 생성
 - API 앱 배포 (Internal Ingress)
 - Web 앱 배포 (External Ingress)
