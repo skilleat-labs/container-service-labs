@@ -133,7 +133,7 @@ echo $ACR_NAME   # 나중에 필요하니 메모해두세요
 
        | 항목 | 값 |
        |------|-----|
-       | 리소스 그룹 | `hanbat-rg` |
+       | 리소스 그룹 | 강사에게 할당받은 리소스 그룹 (예: `hanbat-rg-test01`) |
        | 레지스트리 이름 | `hanbatacr` + 임의 숫자 (전역 유일) |
        | 위치 | Korea Central |
        | SKU | **Basic** |

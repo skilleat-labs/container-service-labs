@@ -36,7 +36,7 @@ Smoke test 용도이므로 ACR의 **관리 사용자(Admin User)** 를 일시적
 
     | 항목 | 값 |
     |------|-----|
-    | 리소스 그룹 | `hanbat-rg` |
+    | 리소스 그룹 | 강사에게 할당받은 리소스 그룹 (예: `hanbat-rg-test01`) |
     | 컨테이너 이름 | `hanbat-api-smoke` |
     | 지역 | Korea Central |
     | 이미지 원본 | **Azure Container Registry** |
@@ -54,7 +54,14 @@ Smoke test 용도이므로 ACR의 **관리 사용자(Admin User)** 를 일시적
     | DNS 이름 레이블 | `hanbat-smoke-<임의 숫자>` (전역 유일) |
     | 포트 | `8080` / TCP |
 
-4. **검토 + 만들기** → **만들기**
+4. **모니터링** 탭으로 이동합니다
+
+    **Enable container instance logs** 체크를 **해제**합니다.
+
+    !!! warning "Log Analytics workspace 오류가 뜨면"
+        체크가 활성화된 상태로 두면 Log Analytics workspace가 필요하다는 오류가 발생합니다. 이 실습은 로그 수집이 필요 없으므로 반드시 비활성화하세요.
+
+5. **검토 + 만들기** → **만들기**
 
 프로비저닝 완료까지 **약 1분** 소요됩니다.
 
@@ -95,7 +102,62 @@ http://<FQDN>:8080/version
 
 ---
 
-## Step 4. ACI 삭제
+## Step 4. ACI 탐색 (Portal)
+
+동작 확인이 끝났으면 ACI의 주요 기능을 Portal에서 직접 살펴봅니다.
+
+### 로그 확인
+
+왼쪽 메뉴 **설정** → **컨테이너** → **로그** 탭을 클릭합니다.
+
+컨테이너가 시작되면서 출력한 로그가 보입니다.
+
+```console title="로그 예시"
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8080
+```
+
+!!! tip "ACI 로그의 특성"
+    ACI는 컨테이너가 삭제되면 로그도 함께 사라집니다. 운영 환경에서는 Log Analytics workspace를 연결해 로그를 영구 보관합니다.
+
+### 콘솔 접속 (Connect)
+
+왼쪽 메뉴 **설정** → **컨테이너** → **연결** 탭을 클릭합니다.
+
+실행 명령을 `/bin/sh`로 두고 **연결**을 클릭하면 컨테이너 내부 셸에 접속됩니다.
+
+접속 후 아래 명령어를 직접 실행해보세요.
+
+```bash title="컨테이너 내부"
+# 프로세스 확인
+ps aux
+
+# 환경변수 확인
+env | grep APP
+
+# API 내부 호출
+wget -qO- http://localhost:8080/health
+```
+
+!!! info "VM SSH vs ACI Connect"
+    VM은 SSH로 외부에서 접속하지만, ACI는 Azure Portal을 통해 컨테이너 내부에 직접 연결합니다. 별도 SSH 설정 없이 바로 셸을 사용할 수 있는 것이 ACI의 장점입니다.
+
+### 이벤트 확인
+
+**연결** 탭 옆 **이벤트** 탭을 클릭하면 컨테이너 생성·시작 이력을 확인할 수 있습니다.
+
+```console title="이벤트 예시"
+Pulling  → 이미지를 ACR에서 내려받는 중
+Pulled   → 이미지 다운로드 완료
+Created  → 컨테이너 생성 완료
+Started  → 컨테이너 시작 완료
+```
+
+---
+
+## Step 5. ACI 삭제
 
 Smoke test 목적이 달성됐으니 즉시 삭제합니다.
 ACI는 실행 중인 시간만큼 과금되므로 확인 즉시 삭제하는 것이 좋습니다.
