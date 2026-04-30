@@ -189,7 +189,7 @@ http://VM_IP:8000
 
 한밭푸드 주문 조회 화면이 보이면 성공입니다.
 
-![한밭푸드 주문 조회 화면](../assets/images/phase-1/web-main.png)
+![한밭푸드 주문 조회 화면](../assets/images/1-5.png)
 
 <div class="checkpoint">
 <div class="checkpoint-title">✅ 확인 포인트</div>
@@ -218,6 +218,19 @@ curl http://localhost:8080/health
 ```bash title="터미널"
 curl "http://localhost:8080/orders?userId=3030"
 ```
+
+!!! tip "jq로 JSON을 보기 좋게 출력하기"
+    `jq`는 JSON을 들여쓰기·색상 구분으로 예쁘게 출력해주는 CLI 도구입니다.
+
+    설치:
+    ```bash
+    sudo apt-get install -y jq
+    ```
+
+    사용:
+    ```bash
+    curl -s "http://localhost:8080/orders?userId=3030" | jq .
+    ```
 
 ```json title="응답"
 {

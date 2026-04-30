@@ -222,7 +222,7 @@ docker --version
 ```
 
 ```console title="출력"
-Docker version 24.x.x, build xxxxxxx
+Docker version 29.x.x, build xxxxxxx
 ```
 
 ```bash title="터미널"
@@ -230,7 +230,7 @@ docker compose version
 ```
 
 ```console title="출력"
-Docker Compose version v2.x.x
+Docker Compose version v5.x.x
 ```
 
 **소스 파일 확인:**
