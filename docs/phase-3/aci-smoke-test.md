@@ -132,7 +132,8 @@ INFO:     Uvicorn running on http://0.0.0.0:8080
 
 ```bash title="컨테이너 내부"
 # 실행 중인 프로세스 확인 (ps가 없는 경우)
-cat /proc/1/cmdline | tr '\0' ' '
+# PID 1은 ACI 내부 인프라 프로세스(/pause)이므로 전체 프로세스를 확인합니다
+cat /proc/*/cmdline 2>/dev/null | tr '\0' ' ' | tr ':' '\n'
 
 # 환경변수 확인
 env | grep APP
@@ -172,7 +173,7 @@ ACI는 실행 중인 시간만큼 과금되므로 확인 즉시 삭제하는 것
 
 ---
 
-## 도전 과제 (선택)
+## 도전 과제
 
 API 확인에 성공했다면 **Web 이미지도 직접 띄워보세요.**
 
@@ -182,6 +183,23 @@ API 확인에 성공했다면 **Web 이미지도 직접 띄워보세요.**
 - 확인 URL: `http://<FQDN>/`
 
 Web ACI도 확인 후 **반드시 삭제**하세요.
+
+CLI로 삭제하려면 VM 터미널에서 아래 명령어를 실행합니다.
+
+```bash title="터미널"
+az container delete \
+  --resource-group <본인_리소스_그룹> \
+  --name <컨테이너_이름> \
+  --yes
+```
+
+생성한 ACI가 모두 삭제됐는지 확인합니다.
+
+```bash title="터미널"
+az container list --resource-group <본인_리소스_그룹> --output table
+```
+
+아무것도 출력되지 않으면 삭제 완료입니다.
 
 ---
 
