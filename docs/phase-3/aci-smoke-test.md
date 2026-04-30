@@ -131,14 +131,14 @@ INFO:     Uvicorn running on http://0.0.0.0:8080
 접속 후 아래 명령어를 직접 실행해보세요.
 
 ```bash title="컨테이너 내부"
-# 프로세스 확인
-ps aux
+# 실행 중인 프로세스 확인 (ps가 없는 경우)
+cat /proc/1/cmdline | tr '\0' ' '
 
 # 환경변수 확인
 env | grep APP
 
-# API 내부 호출
-wget -qO- http://localhost:8080/health
+# API 내부 호출 (wget 대신 Python 사용)
+python3 -c "import urllib.request; print(urllib.request.urlopen('http://localhost:8080/health').read().decode())"
 ```
 
 !!! info "VM SSH vs ACI Connect"
