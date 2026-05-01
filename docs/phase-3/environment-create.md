@@ -122,7 +122,7 @@ Azure Portal에서 제대로 생성됐는지 눈으로 확인합니다.
 1. [portal.azure.com](https://portal.azure.com) → 검색창에 **Container Apps 환경** 검색
 2. 목록에 `hanbat-env` 가 보이면 성공입니다
 
-![ACA 환경 생성 확인](../assets/images/phase-3/env-create.png)
+![ACA 환경 생성 확인](../assets/images/3-2.png)
 
 <div class="checkpoint">
 <div class="checkpoint-title">✅ 확인 포인트</div>
