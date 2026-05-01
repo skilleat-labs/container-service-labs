@@ -34,21 +34,21 @@ Web 앱은 **External Ingress**로 배포합니다 — 인터넷에서 HTTPS로 
        |------|-----|
        | `API_URL` | `/api` |
 
-       !!! warning "반드시 v2.0.0을 사용하세요"
-           v1.0.0은 nginx API 프록시 설정이 없어 주문 목록을 불러올 수 없습니다.
+!!! warning "반드시 v2.0.0을 사용하세요"
+    v1.0.0은 nginx API 프록시 설정이 없어 주문 목록을 불러올 수 없습니다.
 
-       !!! info "API 통신 구조"
-           `hanbat-web`의 nginx가 `/api/*` 요청을 ACA 내부 `hanbat-api` 서비스로 프록시합니다.
-           브라우저는 외부에서 내부 URL에 직접 접근할 수 없기 때문에 nginx가 중간에서 대신 전달합니다.
+!!! info "API 통신 구조"
+    `hanbat-web`의 nginx가 `/api/*` 요청을 ACA 내부 `hanbat-api` 서비스로 프록시합니다.
+    브라우저는 외부에서 내부 URL에 직접 접근할 수 없기 때문에 nginx가 중간에서 대신 전달합니다.
 
-           ```
-           브라우저 → https://hanbat-web.xxx/api/orders
-                      → nginx (hanbat-web 컨테이너)
-                      → http://hanbat-api/orders  (ACA 내부 통신)
-           ```
+    ```
+    브라우저 → https://hanbat-web.xxx/api/orders
+               → nginx (hanbat-web 컨테이너)
+               → http://hanbat-api/orders  (ACA 내부 통신)
+    ```
 
-           nginx는 같은 ACA 환경 내 앱을 **앱 이름만으로** 찾습니다 (`http://hanbat-api`).
-           별도의 `API_BACKEND` 환경변수 설정 없이 자동으로 동작합니다.
+    nginx는 같은 ACA 환경 내 앱을 **앱 이름만으로** 찾습니다 (`http://hanbat-api`).
+    별도의 `API_BACKEND` 환경변수 설정 없이 자동으로 동작합니다.
 
     4. **수신(Ingress)** 탭:
 
