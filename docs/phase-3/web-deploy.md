@@ -9,33 +9,44 @@ Web 앱은 **External Ingress**로 배포합니다 — 인터넷에서 HTTPS로 
 
 ## Step 1. Web 앱 배포
 
-=== "포털 (추천)"
+1. Azure Portal → **Container Apps 환경** → **hanbat-env** → 왼쪽 메뉴 **Apps** → **+ 만들기**
 
-    1. Azure Portal → **Container Apps** → **+ 만들기**
+2. **기본 사항** 탭:
 
-    2. **기본 사항** 탭:
+   | 항목 | 값 |
+   |------|-----|
+   | 컨테이너 앱 이름 | `hanbat-web` |
+   | 지역 | Korea Central |
+   | Container Apps 환경 | `hanbat-env` (자동 선택됨) |
 
-       | 항목 | 값 |
-       |------|-----|
-       | 컨테이너 앱 이름 | `hanbat-web` |
-       | 지역 | Korea Central |
-       | Container Apps 환경 | `hanbat-env` (기존 환경 선택) |
+3. **컨테이너** 탭:
 
-    3. **컨테이너** 탭:
+   | 항목 | 값 |
+   |------|-----|
+   | 이미지 | `<ACR_SERVER>/hanbat-order-web:v2.0.0` |
+   | CPU 및 메모리 | 0.25 CPU, 0.5Gi |
 
-       | 항목 | 값 |
-       |------|-----|
-       | 이미지 | `<ACR_SERVER>/hanbat-order-web:v2.0.0` |
-       | CPU 및 메모리 | 0.25 CPU, 0.5Gi |
+   환경 변수:
 
-       환경 변수:
+   | 이름 | 값 |
+   |------|-----|
+   | `API_URL` | `/api` |
 
-       | 이름 | 값 |
-       |------|-----|
-       | `API_URL` | `/api` |
+4. **수신(Ingress)** 탭:
+
+   | 항목 | 값 |
+   |------|-----|
+   | 수신 | **사용** |
+   | 수신 트래픽 | **어디서나** ← External |
+   | 대상 포트 | `80` |
+
+5. **검토 + 만들기** → **만들기**
 
 !!! warning "반드시 v2.0.0을 사용하세요"
     v1.0.0은 nginx API 프록시 설정이 없어 주문 목록을 불러올 수 없습니다.
+
+!!! danger "대상 포트는 80"
+    Web 컨테이너(nginx)의 내부 포트는 **80**입니다. 8080을 입력하면 Health Check 실패로 앱이 계속 재시작됩니다.
 
 !!! info "API 통신 구조"
     `hanbat-web`의 nginx가 `/api/*` 요청을 ACA 내부 `hanbat-api` 서비스로 프록시합니다.
@@ -50,55 +61,17 @@ Web 앱은 **External Ingress**로 배포합니다 — 인터넷에서 HTTPS로 
     nginx는 같은 ACA 환경 내 앱을 **앱 이름만으로** 찾습니다 (`http://hanbat-api`).
     별도의 `API_BACKEND` 환경변수 설정 없이 자동으로 동작합니다.
 
-    4. **수신(Ingress)** 탭:
-
-       | 항목 | 값 |
-       |------|-----|
-       | 수신 | **사용** |
-       | 수신 트래픽 | **어디서나** ← External |
-       | 대상 포트 | `80` |
-
-       !!! danger "대상 포트는 80"
-           Web 컨테이너(nginx)의 내부 포트는 **80**입니다.
-
-    5. **검토 + 만들기** → **만들기**
-
-=== "CLI"
-
-    ```bash title="터미널"
-    az containerapp create \
-      --name hanbat-web \
-      --resource-group $RESOURCE_GROUP \
-      --environment $ACA_ENV \
-      --image ${ACR_SERVER}/hanbat-order-web:v2.0.0 \
-      --registry-server ${ACR_SERVER} \
-      --target-port 80 \
-      --ingress external \
-      --min-replicas 1 \
-      --max-replicas 3 \
-      --env-vars API_URL=/api
-    ```
-
 ---
 
-## Step 2. Web 앱 URL 확인 및 환경변수 저장
+## Step 2. 최소 복제본 수 확인
 
-```bash title="터미널"
-WEB_URL=$(az containerapp show \
-  --name hanbat-web \
-  --resource-group $RESOURCE_GROUP \
-  --query "properties.configuration.ingress.fqdn" \
-  --output tsv)
+생성 완료 후 확인합니다.
 
-echo "https://$WEB_URL"
-```
+1. **hanbat-web** 클릭 → 왼쪽 메뉴 **Scale** (규모 조정)
+2. 현재 **Min replicas**: `0` — **그대로 둡니다**
 
-```console title="출력"
-https://hanbat-web.xxx.koreacentral.azurecontainerapps.io
-```
-
-!!! tip "`WEB_URL` 변수는 이후 실습에서 계속 사용해요"
-    터미널을 닫으면 변수가 사라지니, 세션이 끊겼을 경우 위 명령을 다시 실행하세요.
+!!! info "왜 web은 0으로 두나요?"
+    `hanbat-web`은 min replicas = 0 상태로 실습합니다. 트래픽이 없으면 컨테이너가 꺼지고, 다시 접속하면 cold start가 발생합니다. 이 동작을 Step 4에서 직접 체험합니다.
 
 ---
 
