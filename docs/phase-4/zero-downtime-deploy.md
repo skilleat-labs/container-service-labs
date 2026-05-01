@@ -76,7 +76,18 @@ done | tee ~/phase4-no-downtime.log
    !!! danger "Revision 이름은 고유해야 합니다"
        기존 revision과 같은 이름을 입력하면 오류가 납니다. suffix에 `v2`를 입력해 구분합니다.
 
-3. **App container** 클릭 → Container details 화면:
+3. 아래 **App container 목록에 기존 `hanbat-api`가 이미 표시됩니다** → 클릭해서 편집
+
+   !!! warning "새 컨테이너를 추가하지 마세요"
+       **+ Add** 버튼은 사이드카/init 컨테이너를 추가하는 용도입니다. 기존 `hanbat-api`를 클릭해서 이미지 태그만 변경해야 합니다.
+
+       | 버튼 | 용도 |
+       |------|------|
+       | 기존 컨테이너 클릭 | 이미지/환경변수 **수정** |
+       | **+ Add app container** | 로그 수집, 캐시 갱신 등 메인 앱을 보조하는 **사이드카** 컨테이너 추가 |
+       | **+ Add init container** | 앱 시작 전 한 번만 실행되는 **초기화** 컨테이너 추가 (디렉토리 생성, 파일 다운로드 등) |
+
+4. **App container** 클릭 → Container details 화면:
 
    | 항목 | 값 |
    |------|-----|
@@ -88,9 +99,9 @@ done | tee ~/phase4-no-downtime.log
    | CPU cores | `0.25` |
    | Memory (Gi) | `0.5` |
 
-4. **환경 변수 (Environment variables)** 섹션에서 `APP_VERSION` 값을 `2.0.0` 으로 변경
+5. **환경 변수 (Environment variables)** 섹션에서 `APP_VERSION` 값을 `2.0.0` 으로 변경
 
-5. **저장 (Save)** → **만들기 (Create)**
+6. **저장 (Save)** → **만들기 (Create)**
 
 !!! warning "환경변수도 반드시 변경하세요"
     이미지만 v2.0.0으로 바꾸고 `APP_VERSION`을 그대로 두면 footer에 `v1.0.0`이 표시됩니다. 이미지와 환경변수를 함께 변경해야 합니다.
