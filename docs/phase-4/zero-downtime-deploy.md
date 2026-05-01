@@ -71,19 +71,21 @@ done | tee ~/phase4-no-downtime.log
 
 1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리 (Revisions and replicas)** → **+ 새 수정 버전 만들기 (New revision)**
 
-2. **컨테이너 (Container)** 탭:
+2. **App container** 클릭 → Container details 화면:
 
    | 항목 | 값 |
    |------|-----|
-   | 이미지 및 태그 | `<ACR_SERVER>/hanbat-order-api:v2.0.0` |
+   | Name | `hanbat-api` |
+   | Image source | Azure Container Registry |
+   | Registry | `hanbatacr2861.azurecr.io` |
+   | Image | `hanbat-order-api` |
+   | Image tag | `v2.0.0` |
+   | CPU cores | `0.25` |
+   | Memory (Gi) | `0.5` |
 
-3. **환경 변수** 섹션:
+3. **환경 변수 (Environment variables)** 섹션에서 `APP_VERSION` 값을 `2.0.0` 으로 변경
 
-   | 이름 | 값 |
-   |------|-----|
-   | `APP_VERSION` | `2.0.0` |
-
-4. **만들기 (Create)**
+4. **저장 (Save)** → **만들기 (Create)**
 
 !!! warning "환경변수도 반드시 변경하세요"
     이미지만 v2.0.0으로 바꾸고 `APP_VERSION`을 그대로 두면 footer에 `v1.0.0`이 표시됩니다. 이미지와 환경변수를 함께 변경해야 합니다.
