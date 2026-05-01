@@ -112,6 +112,69 @@ https://hanbat-web.xxx.koreacentral.azurecontainerapps.io
 
 ![ACA에서 동작하는 한밭푸드 주문 조회 화면](../assets/images/3-3.png)
 
+---
+
+## Step 4. Scale-to-Zero 직접 체험
+
+접속에 성공했다면, 방금 일어난 일을 눈으로 확인해봅니다.
+
+### 지금 무슨 일이 일어난 걸까?
+
+`hanbat-web`은 기본 min replicas = **0**으로 배포됩니다.
+즉, 아무도 접속하지 않으면 컨테이너가 **완전히 꺼집니다.** 비용도 0원.
+
+URL을 처음 열었을 때 브라우저가 한참 빙글빙글 돌았다면, 그건 **오류가 아닙니다.**
+ACA가 꺼져있던 컨테이너를 그 순간 다시 켜는 중이었던 겁니다.
+
+```
+아무도 없음 → replica 0 (컨테이너 꺼짐)
+     ↓
+URL 접속 요청 들어옴
+     ↓
+ACA: "누가 왔네, 컨테이너 켜야지"
+     ↓
+이미지 로드 → 앱 시작 → 응답 (수 초~수십 초)
+     ↓
+replica 1 (컨테이너 켜짐) → 화면 표시
+```
+
+이것을 **Cold Start(콜드 스타트)** 라고 합니다.
+
+### 직접 실험해보기
+
+**① Replica Count 실시간 확인**
+
+```
+Portal → hanbat-web → Metrics
+  → Metric 선택: Replica Count
+  → 시간 범위: 최근 30분
+```
+
+방금 접속했으므로 그래프에 **0 → 1** 로 올라가는 순간이 보일 겁니다.
+
+**② 300초 기다렸다가 다시 접속**
+
+터미널에서 카운트다운을 돌려두고:
+
+```bash title="터미널"
+for i in $(seq 300 -1 1); do echo "$i초 남음"; sleep 1; done && echo "완료! 이제 Metrics 확인하세요"
+```
+
+300초 후 Metrics를 보면 **1 → 0** 으로 내려간 그래프가 보입니다.
+그 상태에서 URL을 다시 열면 — 브라우저가 또 한참 도는 걸 느낄 수 있습니다.
+
+!!! info "300초(5분)가 기본 Cool-down 시간입니다"
+    마지막 요청 후 300초 동안 추가 트래픽이 없으면 replica가 0으로 내려갑니다.
+    이 값은 KEDA 스케일 규칙에서 조정할 수 있습니다.
+
+!!! tip "실제 서비스라면?"
+    Cold Start 지연이 문제가 된다면 `min-replicas = 1`로 설정해 항상 1개를 유지합니다.
+    비용과 응답속도 사이의 트레이드오프입니다.
+    - `min-replicas = 0` → 비용 절감, cold start 발생
+    - `min-replicas = 1` → 항상 즉시 응답, 최소 비용 발생
+
+---
+
 <div class="checkpoint">
 <div class="checkpoint-title">✅ Phase 3 완료 체크리스트</div>
 
