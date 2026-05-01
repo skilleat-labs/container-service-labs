@@ -27,15 +27,15 @@ Revision 교체 → 다운타임 0초 / Traffic Split → v1:v2 = 80:20
 
 기본값은 Single(단일) 모드입니다. Traffic Split을 사용하려면 먼저 Multiple 모드로 바꿔야 합니다.
 
-1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리**
-2. 상단 **수정 버전 모드** → **여러 개** 선택
-3. **저장**
+1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리 (Revisions and replicas)**
+2. 상단 **수정 버전 모드 (Revision mode)** → **여러 개 (Multiple)** 선택
+3. **저장 (Save)**
 
 ---
 
 ## Step 2. 현재 Revision 확인
 
-1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리**
+1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리 (Revisions and replicas)**
 2. 목록에 현재 revision이 1개 보이고 트래픽 **100%** 가 할당되어 있으면 정상입니다
 
 현재 revision 이름을 메모해둡니다 (예: `hanbat-api--0000001`). 이후 Traffic Split 설정 시 사용합니다.
@@ -69,9 +69,9 @@ done | tee ~/phase4-no-downtime.log
 
 ## Step 4. v2 Revision 배포
 
-1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리** → **+ 새 수정 버전 만들기**
+1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리 (Revisions and replicas)** → **+ 새 수정 버전 만들기 (New revision)**
 
-2. **컨테이너** 탭:
+2. **컨테이너 (Container)** 탭:
 
    | 항목 | 값 |
    |------|-----|
@@ -83,7 +83,7 @@ done | tee ~/phase4-no-downtime.log
    |------|-----|
    | `APP_VERSION` | `2.0.0` |
 
-4. **만들기**
+4. **만들기 (Create)**
 
 !!! warning "환경변수도 반드시 변경하세요"
     이미지만 v2.0.0으로 바꾸고 `APP_VERSION`을 그대로 두면 footer에 `v1.0.0`이 표시됩니다. 이미지와 환경변수를 함께 변경해야 합니다.
@@ -104,10 +104,10 @@ done | tee ~/phase4-no-downtime.log
 
 v2 Revision이 **Running** 상태가 되면 트래픽을 분배합니다.
 
-1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리**
+1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리 (Revisions and replicas)**
 2. 목록에 v1, v2 revision이 모두 보입니다
 3. v1 트래픽: **80**, v2 트래픽: **20** 입력
-4. **저장**
+4. **저장 (Save)**
 
 !!! info "Revision 이름 확인"
     수정 버전 관리 목록에서 각 revision의 이름과 현재 트래픽 비중을 확인할 수 있습니다.
@@ -133,9 +133,9 @@ v2 Revision이 **Running** 상태가 되면 트래픽을 분배합니다.
 
 검증 완료 후 v2로 전체 전환합니다.
 
-1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리**
+1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리 (Revisions and replicas)**
 2. v1 트래픽: **0**, v2 트래픽: **100** 입력
-3. **저장**
+3. **저장 (Save)**
 
 Web 화면이 파란 테마(v1) → 초록 테마(v2)로 바뀌고, 배송 추적 기능이 추가됩니다.
 

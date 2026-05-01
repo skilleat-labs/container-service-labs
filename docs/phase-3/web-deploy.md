@@ -11,7 +11,7 @@ Web 앱은 **External Ingress**로 배포합니다 — 인터넷에서 HTTPS로 
 
 1. Azure Portal → **Container Apps 환경** → **hanbat-env** → 왼쪽 메뉴 **Apps** → **+ 만들기**
 
-2. **기본 사항** 탭:
+2. **기본 사항 (Basics)** 탭:
 
    | 항목 | 값 |
    |------|-----|
@@ -19,7 +19,7 @@ Web 앱은 **External Ingress**로 배포합니다 — 인터넷에서 HTTPS로 
    | 지역 | Korea Central |
    | Container Apps 환경 | `hanbat-env` (자동 선택됨) |
 
-3. **컨테이너** 탭:
+3. **컨테이너 (Container)** 탭:
 
    | 항목 | 값 |
    |------|-----|
@@ -32,7 +32,7 @@ Web 앱은 **External Ingress**로 배포합니다 — 인터넷에서 HTTPS로 
    |------|-----|
    | `API_URL` | `/api` |
 
-4. **수신(Ingress)** 탭:
+4. **수신 (Ingress)** 탭:
 
    | 항목 | 값 |
    |------|-----|
@@ -40,7 +40,7 @@ Web 앱은 **External Ingress**로 배포합니다 — 인터넷에서 HTTPS로 
    | 수신 트래픽 | **어디서나** ← External |
    | 대상 포트 | `80` |
 
-5. **검토 + 만들기** → **만들기**
+5. **검토 + 만들기 (Review + create)** → **만들기 (Create)**
 
 !!! warning "반드시 v2.0.0을 사용하세요"
     v1.0.0은 nginx API 프록시 설정이 없어 주문 목록을 불러올 수 없습니다.
@@ -67,7 +67,7 @@ Web 앱은 **External Ingress**로 배포합니다 — 인터넷에서 HTTPS로 
 
 생성 완료 후 확인합니다.
 
-1. **hanbat-web** 클릭 → 왼쪽 메뉴 **Scale** (규모 조정)
+1. **hanbat-web** 클릭 → 왼쪽 메뉴 **Scale (규모 조정)**
 2. 현재 **Min replicas**: `0` — **그대로 둡니다**
 
 !!! info "왜 web은 0으로 두나요?"
