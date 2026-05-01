@@ -71,7 +71,12 @@ done | tee ~/phase4-no-downtime.log
 
 1. **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리 (Revisions and replicas)** → **+ 새 수정 버전 만들기 (New revision)**
 
-2. **App container** 클릭 → Container details 화면:
+2. **Name / suffix** 필드에 `v2` 입력
+
+   !!! danger "Revision 이름은 고유해야 합니다"
+       기존 revision과 같은 이름을 입력하면 오류가 납니다. suffix에 `v2`를 입력해 구분합니다.
+
+3. **App container** 클릭 → Container details 화면:
 
    | 항목 | 값 |
    |------|-----|
@@ -83,9 +88,9 @@ done | tee ~/phase4-no-downtime.log
    | CPU cores | `0.25` |
    | Memory (Gi) | `0.5` |
 
-3. **환경 변수 (Environment variables)** 섹션에서 `APP_VERSION` 값을 `2.0.0` 으로 변경
+4. **환경 변수 (Environment variables)** 섹션에서 `APP_VERSION` 값을 `2.0.0` 으로 변경
 
-4. **저장 (Save)** → **만들기 (Create)**
+5. **저장 (Save)** → **만들기 (Create)**
 
 !!! warning "환경변수도 반드시 변경하세요"
     이미지만 v2.0.0으로 바꾸고 `APP_VERSION`을 그대로 두면 footer에 `v1.0.0`이 표시됩니다. 이미지와 환경변수를 함께 변경해야 합니다.
