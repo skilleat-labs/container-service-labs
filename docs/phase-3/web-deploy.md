@@ -75,11 +75,11 @@ Web 앱은 **External Ingress**로 배포합니다 — 인터넷에서 HTTPS로 
 
 ---
 
-## Step 3. 브라우저 접속
+## Step 3. URL 확인 및 브라우저 접속
 
-```console title="브라우저 주소창"
-https://hanbat-web.xxx.koreacentral.azurecontainerapps.io
-```
+1. **hanbat-web** → **Overview**
+2. **Application Url** 복사
+3. 브라우저 주소창에 붙여넣기 후 접속
 
 한밭푸드 주문 조회 화면(파란 테마)이 나오면 성공입니다. Phase 3에서는 hanbat-api v1이 배포되어 파란 테마로 표시됩니다. 초록 테마는 Phase 4에서 v2로 업데이트 후 확인합니다.
 
@@ -87,13 +87,48 @@ https://hanbat-web.xxx.koreacentral.azurecontainerapps.io
 
 ---
 
-## Step 4. Scale-to-Zero 직접 체험
+## Step 4. 포털에서 앱 상태 확인
 
-접속에 성공했다면, 방금 일어난 일을 눈으로 확인해봅니다.
+배포 후 포털에서 할 수 있는 것들을 하나씩 확인해봅니다.
+
+### Log Stream — 컨테이너 로그 실시간 보기
+
+앱이 정상 동작 중인지, 어떤 요청이 들어오는지 실시간으로 볼 수 있습니다.
+
+1. **hanbat-web** → 왼쪽 메뉴 **Log stream**
+2. 브라우저에서 화면을 새로고침
+3. 로그에 HTTP 요청 로그가 출력되는 것을 확인
+
+```console title="Log stream 출력 예시"
+10.0.0.1 - - [21/Apr/2026:10:30:01 +0000] "GET / HTTP/1.1" 200 1234
+10.0.0.1 - - [21/Apr/2026:10:30:01 +0000] "GET /api/orders HTTP/1.1" 200 567
+```
+
+!!! tip "오류 발생 시에도 여기서 확인"
+    앱이 시작하지 않거나 API 연결이 실패할 때 Log stream에서 원인을 바로 확인할 수 있습니다.
+
+### Metrics — 수치로 앱 상태 파악
+
+1. **hanbat-web** → 왼쪽 메뉴 **Metrics**
+2. 시간 범위: **최근 30분**
+3. 아래 메트릭을 하나씩 선택해서 확인합니다
+
+| Metric | 보여주는 것 |
+|--------|-------------|
+| **Replica Count** | 현재 컨테이너가 몇 개 떠있는지 |
+| **Requests** | 초당 들어오는 요청 수 |
+| **CPU Usage** | CPU 사용률 |
+| **Memory Working Set Bytes** | 메모리 사용량 |
+
+방금 접속했으므로 **Replica Count** 그래프에 **0 → 1** 로 올라가는 순간이 보일 겁니다.
+
+---
+
+## Step 5. Scale-to-Zero 직접 체험
 
 ### 지금 무슨 일이 일어난 걸까?
 
-`hanbat-web`은 기본 min replicas = **0**으로 배포됩니다.
+`hanbat-web`은 min replicas = **0**으로 배포됩니다.
 즉, 아무도 접속하지 않으면 컨테이너가 **완전히 꺼집니다.** 비용도 0원.
 
 URL을 처음 열었을 때 브라우저가 한참 빙글빙글 돌았다면, 그건 **오류가 아닙니다.**
@@ -115,36 +150,37 @@ replica 1 (컨테이너 켜짐) → 화면 표시
 
 ### 직접 실험해보기
 
-**① Replica Count 실시간 확인**
+**① 지금 Metrics에서 Replica Count 확인**
 
-```
-Portal → hanbat-web → Metrics
-  → Metric 선택: Replica Count
-  → 시간 범위: 최근 30분
-```
+**hanbat-web** → **Metrics** → Metric: **Replica Count** → 시간 범위: **최근 30분**
 
-방금 접속했으므로 그래프에 **0 → 1** 로 올라가는 순간이 보일 겁니다.
+그래프에 0 → 1로 올라간 순간이 보입니다.
 
-**② 300초 기다렸다가 다시 접속**
+**② 300초 기다리기**
 
-터미널에서 카운트다운을 돌려두고:
+터미널에서 카운트다운을 돌려두고 자리를 비웁니다:
 
 ```bash title="터미널"
 for i in $(seq 300 -1 1); do echo "$i초 남음"; sleep 1; done && echo "완료! 이제 Metrics 확인하세요"
 ```
 
-300초 후 Metrics를 보면 **1 → 0** 으로 내려간 그래프가 보입니다.
-그 상태에서 URL을 다시 열면 — 브라우저가 또 한참 도는 걸 느낄 수 있습니다.
+**③ 300초 후 Metrics 다시 확인**
+
+그래프에서 **1 → 0** 으로 내려간 구간이 보입니다.
+그 상태에서 URL을 다시 열면 — 브라우저가 또 한참 도는 걸 직접 느낄 수 있습니다.
 
 !!! info "300초(5분)가 기본 Cool-down 시간입니다"
     마지막 요청 후 300초 동안 추가 트래픽이 없으면 replica가 0으로 내려갑니다.
     이 값은 KEDA 스케일 규칙에서 조정할 수 있습니다.
 
 !!! tip "실제 서비스라면?"
-    Cold Start 지연이 문제가 된다면 `min-replicas = 1`로 설정해 항상 1개를 유지합니다.
+    Cold Start 지연이 문제가 된다면 **Scale → Min replicas = 1** 로 설정해 항상 1개를 유지합니다.
     비용과 응답속도 사이의 트레이드오프입니다.
-    - `min-replicas = 0` → 비용 절감, cold start 발생
-    - `min-replicas = 1` → 항상 즉시 응답, 최소 비용 발생
+
+    | 설정 | 비용 | 응답속도 |
+    |------|------|----------|
+    | `min replicas = 0` | 절감 (유휴 시 0원) | cold start 발생 |
+    | `min replicas = 1` | 최소 비용 발생 | 항상 즉시 응답 |
 
 ---
 
