@@ -120,7 +120,6 @@ hanbat-api--def456-ghi012   True    ← 자동 추가!
 - [ ] KEDA HTTP Scaler 설정 완료
 - [ ] `load-test.sh` 실행 후 `containerInstanceId` 변화 확인
 - [ ] Replica 수가 1 → 2 이상으로 늘어남 확인
-- [ ] Azure Portal 스케일 설정 화면 캡처 (평가 B-2)
 
 </div>
 
