@@ -114,34 +114,6 @@ hanbat-api--def456-ghi012   True    ← 자동 추가!
 
 ---
 
-## Step 5. 설정 저장 (평가용)
-
-```bash title="터미널"
-az containerapp show \
-  --name hanbat-api \
-  --resource-group $RESOURCE_GROUP \
-  --query "properties.template.scale" \
-  > ~/phase4-autoscale-config.json
-
-cat ~/phase4-autoscale-config.json
-```
-
-```json title="응답"
-{
-  "maxReplicas": 10,
-  "minReplicas": 1,
-  "rules": [
-    {
-      "custom": {
-        "metadata": {"concurrentRequests": "10"},
-        "type": "http"
-      },
-      "name": "http-scale"
-    }
-  ]
-}
-```
-
 <div class="checkpoint">
 <div class="checkpoint-title">✅ Phase 4 완료 체크리스트</div>
 
@@ -149,7 +121,6 @@ cat ~/phase4-autoscale-config.json
 - [ ] `load-test.sh` 실행 후 `containerInstanceId` 변화 확인
 - [ ] Replica 수가 1 → 2 이상으로 늘어남 확인
 - [ ] Azure Portal 스케일 설정 화면 캡처 (평가 B-2)
-- [ ] `phase4-autoscale-config.json` 저장
 
 </div>
 
