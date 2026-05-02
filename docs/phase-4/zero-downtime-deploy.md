@@ -27,9 +27,9 @@ Revision 교체 → 다운타임 0초 / Traffic Split → v1:v2 = 80:20
 
 기본값은 Single(단일) 모드입니다. Traffic Split을 사용하려면 먼저 Multiple 모드로 바꿔야 합니다.
 
-1. **hanbat-api** → 왼쪽 메뉴 **Settings > Deployment**
-2. **Revision mode** → **Multiple** 선택
-3. **Apply**
+1. **hanbat-api** 클릭
+2. 왼쪽 메뉴 **애플리케이션 > 수정버전 및 복제본** 클릭
+3. 상단 **배포 모드** 클릭 → **Multiple** 선택 후 저장
 
 ---
 
