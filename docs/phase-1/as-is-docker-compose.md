@@ -193,7 +193,7 @@ http://VM_IP:8000
 
 <div class="checkpoint">
 <div class="checkpoint-title">✅ 확인 포인트</div>
-주문 목록이 화면에 표시되나요? 화면 캡처를 저장해두세요 (평가 제출용).
+주문 목록이 화면에 표시되나요?
 </div>
 
 ---
