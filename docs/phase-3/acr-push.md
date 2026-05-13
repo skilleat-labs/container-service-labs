@@ -112,15 +112,46 @@ and enter the code XXXXXXXX to authenticate.
 
 ## Step 1. 변수 설정
 
-```bash title="터미널"
-export RESOURCE_GROUP=hanbat-rg
-export LOCATION=koreacentral
-export ACR_NAME=hanbatacr$RANDOM   # 전역 유일해야 하므로 랜덤값 추가
-```
+### 내 리소스 그룹과 리전 확인
+
+강사마다 수강생에게 배정하는 리소스 그룹 이름과 리전이 다릅니다. 먼저 내 계정에 배정된 리소스 그룹을 조회합니다.
 
 ```bash title="터미널"
-echo $ACR_NAME   # 나중에 필요하니 메모해두세요
+az group list --output table
 ```
+
+```console title="출력 예시"
+Name                Location       Status
+------------------  -------------  ---------
+hanbat-rg-test01    koreacentral   Succeeded
+```
+
+- **Name** 열 → 내 리소스 그룹 이름
+- **Location** 열 → 내 리전
+
+!!! warning "리소스 그룹이 여러 개 보인다면"
+    강사가 배정해준 리소스 그룹 이름을 사용하세요. 모르겠으면 강사에게 확인합니다.
+
+### 변수에 값 입력
+
+조회한 값을 아래 명령에 그대로 입력합니다.
+
+```bash title="터미널"
+export RESOURCE_GROUP=<위에서 확인한 Name>      # 예: hanbat-rg-test01
+export LOCATION=<위에서 확인한 Location>         # 예: koreacentral
+export ACR_NAME=hanbatacr$RANDOM                # 전역 유일해야 하므로 랜덤값 추가
+```
+
+설정된 값을 확인합니다.
+
+```bash title="터미널"
+echo "RESOURCE_GROUP: $RESOURCE_GROUP"
+echo "LOCATION:       $LOCATION"
+echo "ACR_NAME:       $ACR_NAME"
+```
+
+!!! tip "ACR_NAME은 반드시 메모해두세요"
+    `$RANDOM`으로 생성된 이름은 터미널을 닫으면 사라집니다. 이후 단계에서 계속 사용하므로 출력된 값을 메모해두세요.
 
 ---
 
