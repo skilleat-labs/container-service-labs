@@ -99,6 +99,7 @@ nav:
   - 'Phase 1 · AS-IS':
     - Phase 1 개요: phase-1/index.md
     - AS-IS 환경 체험: phase-1/as-is-docker-compose.md
+    - '도전 과제: 트러블슈팅': phase-1/troubleshooting-compose.md
   - 'Phase 2 · 고통 체험':
     - Phase 2 개요: phase-2/index.md
     - '고통 1: 배포 지옥': phase-2/pain-1-deploy-hell.md
