@@ -120,9 +120,9 @@ nav:
   - 'Phase 5 · 의사결정':
     - Phase 5 개요: phase-5/index.md
     - 비교 매트릭스: phase-5/decision-matrix.md
-  - 평가:
-    - 평가 개요: evaluation/index.md
-    - 제출 가이드: evaluation/submission-guide.md
+  # - 평가:
+  #   - 평가 개요: evaluation/index.md
+  #   - 제출 가이드: evaluation/submission-guide.md
   - 참고 자료:
     - 자주 만나는 오류: reference/common-errors.md
     - 유용한 명령어 모음: reference/useful-commands.md
