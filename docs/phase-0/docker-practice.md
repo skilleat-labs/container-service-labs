@@ -63,9 +63,9 @@ Azure Portal → VM → **네트워킹** → **인바운드 포트 규칙 추가
 
 ---
 
-## 실습 3 · 미니 블로그 구성
+## 실습 3 · 네트워크 실습
 
-볼륨과 네트워크를 모두 활용해 frontend + backend 구조의 미니 블로그를 docker run 명령으로 직접 구성합니다.
+사용자 정의 네트워크를 생성하고 컨테이너를 연결해 컨테이너 간 통신이 어떻게 이루어지는지 실습합니다.
 
 <div style="margin: 1.2rem 0;">
   <a href="https://skilleat-labs.github.io/docker-k8s-labs/m8/modules/module8/1-6/" target="_blank" style="display:inline-block; padding: 0.6rem 1.4rem; background:#1F5C99; color:#fff; border-radius:6px; text-decoration:none; font-weight:600;">
