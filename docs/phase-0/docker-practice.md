@@ -37,23 +37,22 @@ Azure Portal → VM → **네트워킹** → **인바운드 포트 규칙 추가
 
 ---
 
-## 실습 1 · 볼륨
+## 실습 1 · 도커 기초 명령어
 
-컨테이너가 삭제되어도 데이터가 남는 원리를 직접 확인합니다.
-볼륨을 생성하고, 컨테이너에 마운트해서 데이터를 저장한 뒤 컨테이너를 지워도 데이터가 유지되는지 실습합니다.
+이미지 pull, 컨테이너 실행·중지·삭제 등 Docker의 핵심 명령어를 직접 실행하며 익힙니다.
 
 <div style="margin: 1.2rem 0;">
-  <a href="https://skilleat-labs.github.io/docker-k8s-labs/m8/modules/module8/1-2/#_3" target="_blank" style="display:inline-block; padding: 0.6rem 1.4rem; background:#1F5C99; color:#fff; border-radius:6px; text-decoration:none; font-weight:600;">
+  <a href="https://skilleat-labs.github.io/docker-k8s-labs/m8/modules/module8/1-2/" target="_blank" style="display:inline-block; padding: 0.6rem 1.4rem; background:#1F5C99; color:#fff; border-radius:6px; text-decoration:none; font-weight:600;">
     실습 1 바로가기 →
   </a>
 </div>
 
 ---
 
-## 실습 2 · 네트워크
+## 실습 2 · 볼륨
 
-컨테이너끼리 이름으로 통신하는 원리를 익힙니다.
-사용자 정의 네트워크를 만들고, 여러 컨테이너를 같은 네트워크에 연결해 서로 통신하는 실습을 진행합니다.
+컨테이너가 삭제되어도 데이터가 남는 원리를 직접 확인합니다.
+볼륨을 생성하고 컨테이너에 마운트해서 데이터를 저장한 뒤, 컨테이너를 지워도 데이터가 유지되는지 실습합니다.
 
 <div style="margin: 1.2rem 0;">
   <a href="https://skilleat-labs.github.io/docker-k8s-labs/m8/modules/module8/1-4/" target="_blank" style="display:inline-block; padding: 0.6rem 1.4rem; background:#1F5C99; color:#fff; border-radius:6px; text-decoration:none; font-weight:600;">
@@ -63,7 +62,7 @@ Azure Portal → VM → **네트워킹** → **인바운드 포트 규칙 추가
 
 ---
 
-## 실습 3 · 네트워크 실습
+## 실습 3 · 네트워크
 
 사용자 정의 네트워크를 생성하고 컨테이너를 연결해 컨테이너 간 통신이 어떻게 이루어지는지 실습합니다.
 
