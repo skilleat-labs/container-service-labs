@@ -96,6 +96,7 @@ nav:
   - 'Phase 0 · 시작':
     - Phase 0 개요: phase-0/index.md
     - 환경 세팅: phase-0/environment-setup.md
+    - Docker 명령어 기초 실습: phase-0/docker-practice.md
     - '도전 과제: 트러블슈팅': phase-0/troubleshooting-compose.md
   - 'Phase 1 · AS-IS':
     - Phase 1 개요: phase-1/index.md
