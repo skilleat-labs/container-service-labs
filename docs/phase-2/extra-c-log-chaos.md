@@ -140,8 +140,16 @@ docker logs api-2
 
 ## Step 7. 컨테이너 제거 (정리)
 
+!!! warning "반드시 이 순서대로 실행하세요"
+    api-2가 네트워크에 연결된 상태에서 `docker compose down`을 하면 네트워크를 삭제하지 못해 이후 `docker compose up -d`가 실패합니다.
+    **api-2를 먼저 제거한 뒤** compose를 내려야 합니다.
+
 ```bash title="터미널"
+# 1. api-2 먼저 제거
 docker rm -f api-2
+
+# 2. 그 다음 compose 재시작
+docker compose down && docker compose up -d
 ```
 
 ---
