@@ -63,15 +63,31 @@ docker compose down && docker compose up -d
 
 ## Step 3. 다운타임 직접 측정
 
-롤백 전후 응답을 직접 측정해봅니다.
+터미널을 **두 개** 열어서 진행합니다. 하나는 모니터링, 하나는 롤백 명령입니다.
 
-```bash title="터미널"
+!!! tip "터미널 추가 접속 방법"
+    현재 SSH 창을 유지한 채로, **새 터미널 창을 열어 VM에 다시 SSH 접속**합니다.
+
+    ```bash title="새 터미널 창"
+    ssh labuser@<VM_공인_IP>
+    ```
+
+**터미널 A — 모니터링 실행 (먼저 실행)**
+
+```bash title="터미널 A"
 for i in $(seq 1 20); do
   STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 2 http://localhost:8080/health 2>/dev/null || echo "ERR")
   echo "$(date +%H:%M:%S)  $STATUS"
   sleep 0.5
-done &
+done
+```
 
+**터미널 B — 롤백 명령 실행**
+
+터미널 A에서 `200` 응답이 나오는 것을 확인한 뒤 실행합니다.
+
+```bash title="터미널 B"
+cd ~/hanbat-order-app
 docker compose down && docker compose up -d
 ```
 
