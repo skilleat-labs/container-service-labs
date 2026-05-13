@@ -1,7 +1,7 @@
 <span class="phase-badge">PHASE 4</span>
 <span class="time-badge">예상 90분</span>
 
-# Phase 4 · 재경기
+# Phase 4 · 고통 해소
 
 ## 이 Phase에서 얻는 것
 

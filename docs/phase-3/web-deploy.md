@@ -241,5 +241,5 @@ az containerapp ingress show \
 
 <div class="nav-buttons">
 <a href="../api-deploy/" class="nav-btn">← API 앱 배포</a>
-<a href="../../phase-4/" class="nav-btn next">Phase 4 · 재경기 →</a>
+<a href="../../phase-4/" class="nav-btn next">Phase 4 · 고통 해소 →</a>
 </div>

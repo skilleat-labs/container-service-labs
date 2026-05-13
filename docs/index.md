@@ -50,7 +50,7 @@
 
 <div class="phase-card" markdown>
 <span class="phase-num">PHASE 4</span>
-<span class="phase-name">재경기</span>
+<span class="phase-name">고통 해소</span>
 <span class="phase-time">90분</span>
 </div>
 

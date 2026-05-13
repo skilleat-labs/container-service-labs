@@ -13,7 +13,7 @@ Azure Container Apps(ACA) 13시간 강의의 학생용 실습 가이드입니다
 | Phase 1 | AS-IS 체험 (docker-compose) | 60분 |
 | Phase 2 | 고통 체험 (배포 지옥, 스케일 불가, 점진 배포 불가) | 60분 |
 | Phase 3 | 첫 이관 (Docker Hub → ACA) | 120분 |
-| Phase 4 | 재경기 (무중단 배포, 자동 확장) | 90분 |
+| Phase 4 | 고통 해소 (무중단 배포, 자동 확장) | 90분 |
 | Phase 5 | 의사결정 (ACA vs AKS vs ACI) | 30분 |
 
 ## 로컬 미리보기

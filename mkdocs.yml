@@ -117,7 +117,7 @@ nav:
     - ACA 환경 생성: phase-3/environment-create.md
     - API 앱 배포: phase-3/api-deploy.md
     - Web 앱 배포: phase-3/web-deploy.md
-  - 'Phase 4 · 재경기':
+  - 'Phase 4 · 고통 해소':
     - Phase 4 개요: phase-4/index.md
     - 무중단 배포: phase-4/zero-downtime-deploy.md
     - 자동 확장: phase-4/auto-scale.md
