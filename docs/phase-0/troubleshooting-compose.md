@@ -21,13 +21,11 @@ services:
   backend:
     image: skilleatlab.azurecr.io/backend:v4-kb5
     container_name: backend-api
-    networks:
-      - app-net
 
   frontend:
     image: skilleatlab.azurecr.io/frontend:v4-kb5
     ports:
-      - "8080:80"
+      - "8080:8080"
     depends_on:
       - backend
     networks:
@@ -54,7 +52,7 @@ docker compose up -d
 
 ??? success "정답 보기 (먼저 스스로 해결해보세요)"
 
-    **문제 — container_name 오류**
+    **문제 1 — container_name 오류**
 
     frontend nginx는 `backend-service`라는 이름으로 backend를 찾습니다.
     `container_name: backend-api`로 설정되어 있어 이름을 찾지 못합니다.
@@ -65,6 +63,59 @@ docker compose up -d
 
     # 수정 후
     container_name: backend-service
+    ```
+
+    **문제 2 — backend networks 누락**
+
+    backend에 `networks` 항목이 없어 `app-net`에 연결되지 않습니다.
+    frontend와 다른 네트워크에 있으므로 컨테이너 이름으로 통신이 불가능합니다.
+
+    ```yaml
+    # 수정 후
+    backend:
+      image: skilleatlab.azurecr.io/backend:v4-kb5
+      container_name: backend-service
+      networks:
+        - app-net
+    ```
+
+    **문제 3 — frontend 포트 매핑 오류**
+
+    frontend 컨테이너 내부는 포트 `80`에서 Nginx가 동작합니다.
+    `"8080:8080"`으로 설정되어 있어 연결이 되지 않습니다.
+
+    ```yaml
+    # 수정 전
+    ports:
+      - "8080:8080"
+
+    # 수정 후
+    ports:
+      - "8080:80"
+    ```
+
+    **수정된 docker-compose.yml:**
+
+    ```yaml title="docker-compose.yml (수정 완료)"
+    services:
+      backend:
+        image: skilleatlab.azurecr.io/backend:v4-kb5
+        container_name: backend-service
+        networks:
+          - app-net
+
+      frontend:
+        image: skilleatlab.azurecr.io/frontend:v4-kb5
+        ports:
+          - "8080:80"
+        depends_on:
+          - backend
+        networks:
+          - app-net
+
+    networks:
+      app-net:
+        driver: bridge
     ```
 
 ---
