@@ -15,20 +15,43 @@
 
 ---
 
-## Step 1. 컨테이너 두 개 띄우기
-
-포트 충돌 없이 API 컨테이너를 두 개 실행합니다.
-(호스트 포트는 각각 다르게, 내부 포트는 동일)
+## Step 1. 기존 서비스 실행 확인
 
 ```bash title="터미널"
 cd ~/hanbat-order-app
-
-# 기존 서비스 실행 중인지 확인
+docker compose up -d
 docker compose ps
 ```
 
+```console title="출력"
+NAME                       STATUS
+hanbat-order-app-api-1     Up
+hanbat-order-app-web-1     Up
+```
+
+---
+
+## Step 2. docker compose가 만든 네트워크 확인
+
+docker compose는 실행 시 자동으로 네트워크를 생성합니다. 이름을 확인합니다.
+
 ```bash title="터미널"
-# api 컨테이너를 8081 포트로 하나 더 실행
+docker network ls | grep hanbat
+```
+
+```console title="출력"
+hanbat-order-app_default   bridge
+```
+
+이 네트워크에 api-2를 연결해야 api-1과 같은 네트워크에서 동작합니다.
+
+---
+
+## Step 3. api 컨테이너를 하나 더 실행
+
+포트 충돌 없이 8081 포트로 두 번째 api 컨테이너를 실행합니다.
+
+```bash title="터미널"
 docker run -d \
   --name api-2 \
   --network hanbat-order-app_default \
@@ -36,9 +59,21 @@ docker run -d \
   skilleat/hanbat-order-api:v1.0.0
 ```
 
+두 컨테이너가 모두 실행 중인지 확인합니다.
+
+```bash title="터미널"
+docker ps --filter "name=api"
+```
+
+```console title="출력"
+NAMES                      PORTS
+hanbat-order-app-api-1     0.0.0.0:8080->8080/tcp
+api-2                      0.0.0.0:8081->8080/tcp
+```
+
 ---
 
-## Step 2. 각 컨테이너에 요청 보내기
+## Step 4. 각 컨테이너에 요청 보내기
 
 ```bash title="터미널"
 # api-1 (8080)에 요청
@@ -54,7 +89,7 @@ done
 
 ---
 
-## Step 3. 로그 확인 — 뒤섞임 체험
+## Step 5. 로그 확인 — 뒤섞임 체험
 
 ```bash title="터미널"
 docker logs hanbat-order-app-api-1 &
@@ -75,7 +110,7 @@ INFO:     172.18.0.1:54610 - "GET /orders HTTP/1.1" 200
 
 ---
 
-## Step 4. 컨테이너별로 따로 보기
+## Step 6. 컨테이너별로 따로 보기
 
 그나마 컨테이너 이름을 지정하면 분리해서 볼 수 있습니다.
 
@@ -103,7 +138,7 @@ docker logs api-2
 
 ---
 
-## 정리 후 컨테이너 제거
+## Step 7. 컨테이너 제거 (정리)
 
 ```bash title="터미널"
 docker rm -f api-2
