@@ -14,7 +14,28 @@
 https://portal.azure.com
 ```
 
-처음 로그인 시 비밀번호 변경을 요구합니다. 새 비밀번호로 변경한 후 계속하세요.
+### MFA(다단계 인증) 설정
+
+처음 로그인하면 **추가 인증 수단 등록** 화면이 나타납니다. 아래 순서대로 Microsoft Authenticator 앱을 설정하세요.
+
+**1단계 — 앱 설치**
+
+스마트폰에서 Microsoft Authenticator 앱을 설치합니다.
+
+- **iOS**: App Store에서 `Microsoft Authenticator` 검색
+- **Android**: Google Play에서 `Microsoft Authenticator` 검색
+
+**2단계 — 앱에서 계정 추가**
+
+앱을 열고 **+ 계정 추가** → **회사 또는 학교 계정** → **QR 코드 스캔**을 선택합니다.
+
+**3단계 — QR 코드 스캔**
+
+브라우저에 표시된 QR 코드를 앱으로 스캔합니다. 스캔이 완료되면 앱에 계정이 등록됩니다.
+
+**4단계 — 인증 확인**
+
+브라우저에서 **다음**을 클릭하면 앱에 승인 요청 알림이 옵니다. 앱에서 **승인**을 탭하면 인증이 완료됩니다.
 
 <div class="checkpoint">
 <div class="checkpoint-title">✅ 확인 포인트</div>
