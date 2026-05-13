@@ -73,46 +73,59 @@ api-2                      0.0.0.0:8081->8080/tcp
 
 ---
 
-## Step 4. 각 컨테이너에 요청 보내기
+## Step 4. 터미널 두 개 준비
 
-```bash title="터미널"
-# api-1 (8080)에 요청
-for i in $(seq 1 5); do
-  curl -s http://localhost:8080/orders > /dev/null
-done
+터미널을 **두 개** 열어서 진행합니다.
 
-# api-2 (8081)에 요청
-for i in $(seq 1 5); do
-  curl -s http://localhost:8081/orders > /dev/null
-done
-```
+!!! tip "터미널 추가 접속"
+    새 터미널 창을 열어 VM에 다시 SSH 접속합니다.
+    ```bash title="새 터미널 창"
+    ssh labuser@<VM_공인_IP>
+    ```
 
 ---
 
 ## Step 5. 로그 확인 — 뒤섞임 체험
 
-```bash title="터미널"
-docker logs hanbat-order-app-api-1 &
-docker logs api-2 &
+**터미널 A** — 두 컨테이너 로그를 동시에 실시간으로 출력합니다.
+
+```bash title="터미널 A"
+docker logs -f hanbat-order-app-api-1 &
+docker logs -f api-2 &
 ```
 
-두 컨테이너의 로그가 터미널에 동시에 출력되어 뒤섞입니다.
+**터미널 B** — 두 컨테이너에 번갈아 요청을 보냅니다.
 
-```console title="출력 예시 — 어느 컨테이너 로그인지 구분이 어렵습니다"
-INFO:     172.18.0.1:54321 - "GET /orders HTTP/1.1" 200
-INFO:     172.18.0.1:54400 - "GET /orders HTTP/1.1" 200
-INFO:     172.18.0.1:54210 - "GET /orders HTTP/1.1" 500  ← 어느 컨테이너?
-INFO:     172.18.0.1:54500 - "GET /orders HTTP/1.1" 200
-INFO:     172.18.0.1:54610 - "GET /orders HTTP/1.1" 200
+```bash title="터미널 B"
+for i in $(seq 1 10); do
+  curl -s http://localhost:8080/health > /dev/null
+  curl -s http://localhost:8081/health > /dev/null
+  sleep 0.3
+done
 ```
 
-500 에러가 어느 컨테이너에서 발생했는지 로그만으로는 알 수 없습니다.
+터미널 A에서 아래와 같이 두 컨테이너의 로그가 뒤섞여 출력됩니다.
+
+```console title="터미널 A 출력 — 어느 컨테이너 로그인지 구분이 안 됩니다"
+INFO:     127.0.0.1:41820 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52134 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41824 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52138 - "GET /health HTTP/1.1" 200 OK
+```
+
+두 컨테이너의 로그 형식이 완전히 동일해서 **어느 쪽 로그인지 구분할 수 없습니다.**
+
+터미널 A에서 로그 팔로우를 종료합니다.
+
+```bash title="터미널 A"
+kill %1 %2 2>/dev/null; wait 2>/dev/null
+```
 
 ---
 
 ## Step 6. 컨테이너별로 따로 보기
 
-그나마 컨테이너 이름을 지정하면 분리해서 볼 수 있습니다.
+그나마 컨테이너를 하나씩 지정하면 분리해서 볼 수 있습니다.
 
 ```bash title="터미널"
 # api-1 로그만
@@ -124,9 +137,9 @@ docker logs api-2
 
 그런데 실제 운영에서는:
 
-- 컨테이너가 몇 개인지 매번 확인해야 함
-- 각각 따로 열어봐야 함
-- 로그를 한 곳에 모아서 검색하는 기능이 없음
+- 컨테이너가 몇 개 떠있는지 매번 `docker ps`로 확인해야 함
+- 각각 따로 열어서 비교해야 함
+- 특정 에러를 검색하려면 컨테이너마다 `grep`을 반복해야 함
 
 <div class="pain-box">
 <div class="pain-box-title">🔥 컨테이너가 늘어날수록 로그 추적이 더 어려워집니다</div>
