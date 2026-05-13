@@ -106,6 +106,10 @@ nav:
     - '고통 1: 배포 지옥': phase-2/pain-1-deploy-hell.md
     - '고통 2: 스케일 불가': phase-2/pain-2-scale-fail.md
     - '고통 3: 점진 배포 불가': phase-2/pain-3-no-canary.md
+    - '심화 A: 롤백도 지옥이다': phase-2/extra-a-rollback.md
+    - '심화 B: 헬스체크 없는 배포': phase-2/extra-b-healthcheck.md
+    - '심화 C: 로그가 뒤섞인다': phase-2/extra-c-log-chaos.md
+    - '심화 D: 환경변수 지옥': phase-2/extra-d-env-hell.md
   - 'Phase 3 · 첫 이관':
     - Phase 3 개요: phase-3/index.md
     - ACR 생성 및 이미지 푸시: phase-3/acr-push.md
