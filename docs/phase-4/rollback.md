@@ -51,24 +51,21 @@ done | tee ~/phase4-rollback.log
 
 ## Step 2. 현재 상태 확인
 
-```bash title="터미널 2"
-az containerapp ingress traffic show \
-  --name hanbat-api \
-  --resource-group skilleat-container-lab
-```
-
-v2가 100% (또는 80%) 트래픽을 받고 있는 상태를 확인합니다.
+1. Azure Portal → **hanbat-api** → 왼쪽 메뉴 **수정 버전 관리 (Revisions and replicas)**
+2. v2 revision이 100% (또는 80%) 트래픽을 받고 있는 상태를 확인합니다
 
 ---
 
 ## Step 3. v1으로 즉시 롤백
 
-```bash
-az containerapp ingress traffic set \
-  --name hanbat-api \
-  --resource-group skilleat-container-lab \
-  --revision-weight hanbat-api--v2=0 hanbat-api--v1=100
-```
+1. **수정 버전 관리** 화면에서 트래픽 비율을 변경합니다
+
+    | Revision | 변경 전 | 변경 후 |
+    |----------|---------|---------|
+    | hanbat-api--v2 | 100% | **0%** |
+    | hanbat-api--v1 | 0% | **100%** |
+
+2. **저장 (Save)** 클릭
 
 !!! tip "ACA 롤백의 핵심"
     v1 revision이 살아있는 상태에서 **트래픽 비율만 바꾸는 것**이 롤백입니다.
@@ -78,15 +75,17 @@ az containerapp ingress traffic set \
 
 ## Step 4. 롤백 확인
 
+브라우저에서 새로고침합니다 — **파란 테마**로 돌아오면 롤백 성공입니다.
+
+터미널에서도 확인합니다:
+
 ```bash
 for i in $(seq 1 10); do
-  curl -s https://hanbat-web2.wittymushroom-f618034a.koreacentral.azurecontainerapps.io/api/version | grep -o '"version":"[^"]*"'
+  curl -s https://<WEB_URL>/api/version | grep -o '"version":"[^"]*"'
 done
 ```
 
 전부 `v1.0.0`이 나오면 롤백 완료입니다.
-
-브라우저에서도 확인합니다 — 파란 테마로 돌아오면 성공입니다.
 
 <div class="checkpoint">
 <div class="checkpoint-title">✅ 확인 포인트</div>
