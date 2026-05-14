@@ -46,11 +46,11 @@ backend (Flask)
 ```yaml title="docker-compose.yml"
 services:
   backend:
-    image: skilleatlab.azurecr.io/backend:v4-kb5
+    image: skilleat/backend:v4-kb5
     container_name: backend-api
 
   frontend:
-    image: skilleatlab.azurecr.io/frontend:v4-kb5
+    image: skilleat/frontend:v4-kb5
     ports:
       - "8080:8080"
     depends_on:
