@@ -48,19 +48,19 @@ conn.close()
 
 `주문 수: 17` 이 나오면 정상 (기본 16건 + 추가 1건)
 
+삽입 후 **hanbat-web 브라우저**를 새로고침하면 주문 목록에 **볼륨 테스트 상품**이 나타납니다.
+
+!!! tip "왜 웹에서 바로 보일까?"
+    콘솔에서 직접 DB에 삽입했지만, hanbat-api는 같은 `/app/data/orders.db` 파일을 읽어 `/orders`를 응답합니다.
+    hanbat-web은 그 API를 호출하므로 즉시 반영됩니다.
+
 ### Step 0-2. 재시작 후 데이터 사라짐 확인
 
-```bash title="터미널"
-# 재시작 전 주문 수 확인
-curl -s https://<API_FQDN>/health | grep orderCount
-```
+웹에서 **볼륨 테스트 상품**이 보이는 상태에서 컨테이너를 재시작합니다.
 
 Portal → **hanbat-api** → **수정 버전 관리** → 현재 revision → **수정 버전 다시 시작**
 
-```bash title="터미널 (재시작 후)"
-# 재시작 후 주문 수 확인 → 16으로 리셋됨
-curl -s https://<API_FQDN>/health | grep orderCount
-```
+재시작이 완료되면 웹을 새로고침합니다 — **볼륨 테스트 상품이 사라지고 16건으로 초기화**됩니다.
 
 !!! danger "볼륨이 없으면"
     재시작 시 DB 파일이 사라지고 seed 데이터(16건)로 초기화됩니다.
@@ -194,12 +194,9 @@ conn.close()
 
 Portal → **hanbat-api** → **수정 버전 관리** → `hanbat-api--vol` → **수정 버전 다시 시작**
 
-**③ 재시작 후 주문 수 확인**
+**③ 재시작 후 웹에서 확인**
 
-```bash title="터미널"
-curl -s https://<API_FQDN>/health | grep orderCount
-# 17 유지되면 볼륨 마운트 성공!
-```
+hanbat-web 브라우저를 새로고침합니다 — **볼륨 테스트 상품이 그대로 남아있으면 볼륨 마운트 성공!**
 
 <div class="checkpoint">
 <div class="checkpoint-title">✅ 확인 포인트</div>
