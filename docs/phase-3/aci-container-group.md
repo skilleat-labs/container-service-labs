@@ -57,14 +57,6 @@ apiVersion: 2019-12-01
 name: hanbat-group
 properties:
   containers:
-  - name: api
-    properties:
-      image: # 직접 채우세요
-      resources:
-        requests:
-          cpu: # 직접 채우세요
-          memoryInGB: # 직접 채우세요
-
   - name: web
     properties:
       image: <ACR이름>.azurecr.io/hanbat-order-web:v1.0.0
@@ -94,9 +86,10 @@ properties:
 ```
 
 !!! question "힌트"
-    - api 이미지 태그는 web과 동일합니다
+    - web 위에 api 컨테이너를 같은 계층으로 추가하세요
     - api는 외부에 포트를 열 필요가 없습니다
     - cpu: 0.5, memoryInGB: 0.5 로 설정하세요
+    - 이미지: `<ACR이름>.azurecr.io/hanbat-order-api:v1.0.0`
 
 !!! tip "ACR 자격증명 확인 방법"
     Azure Portal → **컨테이너 레지스트리** → `hanbatacr...` 선택
