@@ -50,7 +50,7 @@ VM 터미널에서 파일을 만듭니다.
 vi ~/container-group.yaml
 ```
 
-아래 YAML에서 `< >` 부분을 본인 값으로 채워서 작성하세요.
+아래 YAML에서 `< >` 부분을 본인 값으로 채우고, **web 컨테이너 부분은 직접 작성**하세요.
 
 ```yaml
 apiVersion: 2019-12-01
@@ -67,16 +67,16 @@ properties:
 
   - name: web
     properties:
-      image: <ACR이름>.azurecr.io/hanbat-order-web:v1.0.0
+      image: # 직접 채우세요
       environmentVariables:
       - name: API_URL
-        value: "http://localhost:8080"
+        value: # 직접 채우세요 (api와 통신할 주소)
       resources:
         requests:
-          cpu: 0.5
-          memoryInGB: 0.5
+          cpu: # 직접 채우세요
+          memoryInGB: # 직접 채우세요
       ports:
-      - port: 8000
+      - port: # 직접 채우세요
 
   imageRegistryCredentials:
   - server: <ACR이름>.azurecr.io
@@ -88,8 +88,13 @@ properties:
     type: Public
     ports:
     - protocol: tcp
-      port: 8000
+      port: # 직접 채우세요
 ```
+
+!!! question "힌트"
+    - web 이미지 태그는 api와 동일합니다
+    - api와 web은 같은 그룹 안에서 `localhost`로 통신합니다
+    - web 컨테이너의 외부 포트는 `8000`입니다
 
 !!! tip "ACR 자격증명 확인 방법"
     Azure Portal → **컨테이너 레지스트리** → `hanbatacr...` 선택
