@@ -126,6 +126,7 @@ nav:
     - 무중단 배포: phase-4/zero-downtime-deploy.md
     - 롤백 실습: phase-4/rollback.md
     - 로그 스트림 실습: phase-4/log-stream.md
+    - 자동 재시작: phase-4/auto-restart.md
     - 자동 확장: phase-4/auto-scale.md
     - '도전 과제: 미니 블로그 ACA 이관': phase-4/challenge-mini-blog.md
   - 'Phase 5 · 의사결정':
