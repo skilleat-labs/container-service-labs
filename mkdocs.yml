@@ -123,6 +123,7 @@ nav:
     - 무중단 배포: phase-4/zero-downtime-deploy.md
     - 롤백 실습: phase-4/rollback.md
     - 로그 스트림 실습: phase-4/log-stream.md
+    - 볼륨 (Volume): phase-4/volume.md
     - 자동 확장: phase-4/auto-scale.md
   - 'Phase 5 · 의사결정':
     - Phase 5 개요: phase-5/index.md
