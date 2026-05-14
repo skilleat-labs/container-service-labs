@@ -121,6 +121,7 @@ nav:
   - 'Phase 3-2 · 스토리지 & 볼륨':
     - Phase 3-2 개요: phase-3-2/index.md
     - 볼륨 (Volume): phase-3-2/volume.md
+    - '도전 과제: 미니 블로그 ACA 이관': phase-3-2/challenge.md
   - 'Phase 4 · 고통 해소':
     - Phase 4 개요: phase-4/index.md
     - 무중단 배포: phase-4/zero-downtime-deploy.md
