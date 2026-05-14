@@ -38,7 +38,7 @@ Azure Portal 콘솔로 컨테이너 내부에 직접 접속해서 주문 1건을
 python3 -c "
 import sqlite3
 conn = sqlite3.connect('/app/data/orders.db')
-conn.execute(\"INSERT INTO orders VALUES ('ORD-TEST-9999', 3030, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');\")
+conn.execute(\"INSERT OR REPLACE INTO orders VALUES ('ORD-TEST-9999', 3030, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');\")
 conn.commit()
 count = conn.execute('SELECT COUNT(*) FROM orders;').fetchone()[0]
 print('주문 수:', count)
@@ -179,7 +179,7 @@ Portal → **hanbat-api** → **모니터링 > 콘솔 (Console)** → `hanbat-ap
 python3 -c "
 import sqlite3
 conn = sqlite3.connect('/app/data/orders.db')
-conn.execute(\"INSERT INTO orders VALUES ('ORD-TEST-9999', 3030, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');\")
+conn.execute(\"INSERT OR REPLACE INTO orders VALUES ('ORD-TEST-9999', 3030, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');\")
 conn.commit()
 count = conn.execute('SELECT COUNT(*) FROM orders;').fetchone()[0]
 print('주문 수:', count)
