@@ -64,16 +64,17 @@ docker push <ACR이름>.azurecr.io/mini-blog-backend:v1
 
 | 항목 | 값 |
 |------|-----|
-| 앱 이름 | `mini-blog-api` |
+| 앱 이름 | `backend-service` |
 | 이미지 | `<ACR이름>.azurecr.io/mini-blog-backend:v1` |
 | Ingress | **Internal** |
 | 포트 | `5000` |
 | 최소 replica | `2` |
 | 최대 replica | `2` |
 
-!!! tip "backend를 먼저 배포하는 이유"
-    frontend가 시작할 때 backend URL로 연결을 시도합니다.
-    backend가 먼저 떠 있어야 frontend가 정상 작동합니다.
+!!! tip "앱 이름이 곧 hostname"
+    ACA 환경 내부에서는 **앱 이름이 hostname**이 됩니다.
+    frontend 이미지는 `backend-service`라는 이름으로 backend를 찾도록 설정되어 있으므로
+    반드시 앱 이름을 `backend-service`로 지정해야 합니다.
 
 ---
 
@@ -85,16 +86,6 @@ docker push <ACR이름>.azurecr.io/mini-blog-backend:v1
 | 이미지 | `<ACR이름>.azurecr.io/mini-blog-frontend:v1` |
 | Ingress | **External** |
 | 포트 | `80` |
-
-**환경 변수 추가:**
-
-| 이름 | 값 |
-|------|-----|
-| `BACKEND_URL` | `http://mini-blog-api` |
-
-!!! info "ACA 내부 통신"
-    ACA 환경 내부에서는 앱 이름이 곧 hostname입니다.
-    `http://mini-blog-api` 로 backend에 접근할 수 있습니다.
 
 ---
 
@@ -149,7 +140,7 @@ replica B ─┘
 | 항목 | 확인 |
 |------|------|
 | Docker Hub 이미지를 ACR에 push 완료 | ☐ |
-| `mini-blog-api` (Internal, 2 replica) 배포 완료 | ☐ |
+| `backend-service` (Internal, 2 replica) 배포 완료 | ☐ |
 | `mini-blog-web` (External) 배포 완료 | ☐ |
 | 브라우저에서 글 작성 및 출력 확인 | ☐ |
 | 새로고침 시 데이터 불일치 현상 발견 | ☐ |
