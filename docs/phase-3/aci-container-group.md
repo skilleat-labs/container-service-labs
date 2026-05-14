@@ -59,24 +59,26 @@ properties:
   containers:
   - name: api
     properties:
-      image: <ACR이름>.azurecr.io/hanbat-order-api:v1.0.0
-      resources:
-        requests:
-          cpu: 0.5
-          memoryInGB: 0.5
-
-  - name: web
-    properties:
       image: # 직접 채우세요
-      environmentVariables:
-      - name: API_URL
-        value: # 직접 채우세요 (api와 통신할 주소)
       resources:
         requests:
           cpu: # 직접 채우세요
           memoryInGB: # 직접 채우세요
+
+  - name: web
+    properties:
+      image: <ACR이름>.azurecr.io/hanbat-order-web:v1.0.0
+      environmentVariables:
+      - name: API_URL
+        value: "http://localhost:8080"
+      - name: API_BACKEND_URL
+        value: "http://localhost:8080"
+      resources:
+        requests:
+          cpu: 0.5
+          memoryInGB: 0.5
       ports:
-      - port: # 직접 채우세요
+      - port: 8000
 
   imageRegistryCredentials:
   - server: <ACR이름>.azurecr.io
@@ -92,9 +94,9 @@ properties:
 ```
 
 !!! question "힌트"
-    - web 이미지 태그는 api와 동일합니다
-    - api와 web은 같은 그룹 안에서 `localhost`로 통신합니다
-    - web 컨테이너의 외부 포트는 `8000`입니다
+    - api 이미지 태그는 web과 동일합니다
+    - api는 외부에 포트를 열 필요가 없습니다
+    - cpu: 0.5, memoryInGB: 0.5 로 설정하세요
 
 !!! tip "ACR 자격증명 확인 방법"
     Azure Portal → **컨테이너 레지스트리** → `hanbatacr...` 선택
