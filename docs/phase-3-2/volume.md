@@ -232,6 +232,6 @@ Azure Files → hanbat-data 파일 공유에 <code>orders.db</code> 파일이 �
 ---
 
 <div class="nav-buttons">
-<a href="../log-stream/" class="nav-btn">← 로그 스트림 실습</a>
-<a href="../auto-scale/" class="nav-btn next">자동 확장 →</a>
+<a href="../" class="nav-btn">← Phase 3-2 개요</a>
+<a href="../../phase-4/" class="nav-btn next">Phase 4 →</a>
 </div>

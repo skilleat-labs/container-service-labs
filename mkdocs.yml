@@ -118,12 +118,14 @@ nav:
     - ACA 환경 생성: phase-3/environment-create.md
     - API 앱 배포: phase-3/api-deploy.md
     - Web 앱 배포: phase-3/web-deploy.md
+  - 'Phase 3-2 · 스토리지 & 볼륨':
+    - Phase 3-2 개요: phase-3-2/index.md
+    - 볼륨 (Volume): phase-3-2/volume.md
   - 'Phase 4 · 고통 해소':
     - Phase 4 개요: phase-4/index.md
     - 무중단 배포: phase-4/zero-downtime-deploy.md
     - 롤백 실습: phase-4/rollback.md
     - 로그 스트림 실습: phase-4/log-stream.md
-    - 볼륨 (Volume): phase-4/volume.md
     - 자동 확장: phase-4/auto-scale.md
   - 'Phase 5 · 의사결정':
     - Phase 5 개요: phase-5/index.md

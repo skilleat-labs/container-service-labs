@@ -100,5 +100,5 @@ v2 revision 로그만 따로 볼 수 있나요?
 
 <div class="nav-buttons">
 <a href="../rollback/" class="nav-btn">← 롤백 실습</a>
-<a href="../auto-scale/" class="nav-btn next">자동 확장 →</a>
+<a href="auto-scale/" class="nav-btn next">자동 확장 →</a>
 </div>
