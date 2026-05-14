@@ -20,15 +20,53 @@ hanbat-api는 주문 데이터를 `/app/data/orders.db` (SQLite)에 저장합니
   └── /app/data/orders.db  ← 컨테이너가 죽으면 함께 사라짐
 ```
 
-**직접 확인해봅니다.**
+### Step 0-1. 테스트 주문 추가
 
-1. 브라우저에서 주문 목록 확인 — 현재 주문 수 기억
-2. Portal → **hanbat-api** → **수정 버전 관리** → 현재 revision → **수정 버전 다시 시작**
-3. 브라우저 새로고침 — 주문 데이터가 초기화(seed 데이터로 리셋)됨
+컨테이너 내부에 직접 접속해서 주문 1건을 추가합니다.
 
-!!! info "왜 완전히 사라지지 않나요?"
-    재시작 시 seed 데이터로 초기화됩니다. 사용자가 추가한 주문은 사라집니다.
-    볼륨을 마운트하면 재시작해도 추가한 주문이 유지됩니다.
+```bash title="터미널"
+az containerapp exec \
+  --name hanbat-api \
+  --resource-group skilleat-container-lab \
+  --command "sh"
+```
+
+접속 후 SQLite에 테스트 주문 삽입:
+
+```bash title="컨테이너 내부"
+sqlite3 /app/data/orders.db \
+  "INSERT INTO orders VALUES ('ORD-TEST-9999', 9999, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');"
+```
+
+주문 수 확인:
+
+```bash title="컨테이너 내부"
+sqlite3 /app/data/orders.db "SELECT COUNT(*) FROM orders;"
+# 17 이 나오면 정상 (기본 16건 + 추가 1건)
+exit
+```
+
+### Step 0-2. 재시작 후 데이터 사라짐 확인
+
+```bash title="터미널"
+# 재시작 전 주문 수 확인
+curl -s https://<API_FQDN>/health | grep orderCount
+```
+
+Portal → **hanbat-api** → **수정 버전 관리** → 현재 revision → **수정 버전 다시 시작**
+
+```bash title="터미널 (재시작 후)"
+# 재시작 후 주문 수 확인 → 16으로 리셋됨
+curl -s https://<API_FQDN>/health | grep orderCount
+```
+
+!!! danger "볼륨이 없으면"
+    재시작 시 DB 파일이 사라지고 seed 데이터(16건)로 초기화됩니다.
+    사용자가 추가한 주문은 영구적으로 사라집니다.
+
+---
+
+이제 볼륨을 마운트해서 이 문제를 해결합니다.
 
 ---
 
@@ -133,19 +171,34 @@ ACA 볼륨을 사용하려면 먼저 **ACA 환경(Environment)** 에 Storage를 
 
 ## Step 5. 데이터 영속성 확인
 
-### 볼륨 마운트 전후 비교
+**① 테스트 주문 다시 추가**
 
-**① 주문 추가**
+```bash title="터미널"
+az containerapp exec \
+  --name hanbat-api \
+  --resource-group skilleat-container-lab \
+  --revision hanbat-api--vol \
+  --command "sh"
+```
 
-브라우저에서 주문 목록 확인 — 현재 데이터 기억합니다.
+```bash title="컨테이너 내부"
+sqlite3 /app/data/orders.db \
+  "INSERT INTO orders VALUES ('ORD-TEST-9999', 9999, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');"
+sqlite3 /app/data/orders.db "SELECT COUNT(*) FROM orders;"
+# 17 확인 후
+exit
+```
 
 **② 재시작**
 
 Portal → **hanbat-api** → **수정 버전 관리** → `hanbat-api--vol` → **수정 버전 다시 시작**
 
-**③ 브라우저 새로고침**
+**③ 재시작 후 주문 수 확인**
 
-재시작 후에도 주문 데이터가 유지되면 볼륨 마운트 성공입니다.
+```bash title="터미널"
+curl -s https://<API_FQDN>/health | grep orderCount
+# 17 유지되면 볼륨 마운트 성공!
+```
 
 <div class="checkpoint">
 <div class="checkpoint-title">✅ 확인 포인트</div>
