@@ -1,137 +1,110 @@
-<span class="phase-badge">PHASE 3-2</span>
+<span class="phase-badge">PHASE 4</span>
 <span class="challenge-badge">도전 과제</span>
 
 # 도전 과제: 미니 블로그 ACA 이관
 
 ## 과제 개요
 
-Docker 기반으로 운영하던 **미니 블로그 서비스**를 ACA로 이관합니다.
-
-이관 과정에서 **다중 replica 환경의 데이터 불일치 문제**를 직접 발견하고,
-지금까지 배운 **Azure Files 볼륨**으로 스스로 해결해봅니다.
+Docker 기반으로 운영하던 미니 블로그 서비스를 ACA로 이관합니다.
+이관 후 replica를 늘리면서 발생하는 **데이터 불일치 문제를 직접 발견**하고,
+지금까지 배운 내용을 총동원해서 **스스로 해결**합니다.
 
 ---
 
 ## 서비스 구조
 
+미니 블로그는 **두 개의 컨테이너**로 구성되어 있습니다.
+
 ```
-사용자 브라우저
-     ↓ (HTTPS)
-frontend (Nginx) — ACA External Ingress
-     ↓ (HTTP /posts)
-backend (Flask) — ACA Internal Ingress
-     ↓
-/app/data.json 저장
+브라우저
+  ↓ https://<ACA 외부 URL>
+frontend (Nginx)
+  — 정적 페이지를 서빙
+  — 글 작성/조회 요청을 backend로 프록시
+  ↓ http://backend-service:5000
+backend (Flask)
+  — REST API 처리
+  — 게시글을 /app/data.json 파일에 저장/조회
 ```
 
-- **frontend**: Nginx 기반 정적 페이지 서빙 + backend로 API 요청 프록시
-- **backend**: Flask 기반 REST API, 게시글을 `data.json`에 저장/조회
-- **두 컨테이너는 ACA 환경 내부 통신**으로 연결
+| 컨테이너 | 역할 | 내부 포트 |
+|----------|------|-----------|
+| frontend | Nginx — 페이지 서빙 + API 프록시 | 80 |
+| backend | Flask — REST API + 데이터 저장 | 5000 |
+
+!!! info "통신 방식"
+    frontend는 `http://backend-service:5000` 으로 backend를 호출합니다.
+    ACA 환경 내부에서는 **앱 이름이 곧 hostname**이 되므로,
+    backend의 ACA 앱 이름은 반드시 `backend-service`여야 합니다.
 
 ---
 
 ## 사용 이미지
 
-| 서비스 | Docker Hub 이미지 |
-|--------|-------------------|
+| 서비스 | Docker Hub |
+|--------|------------|
 | frontend | `skilleat/frontend:v4-kb5` |
 | backend | `skilleat/backend:v4-kb5` |
 
 ---
 
-## 1단계. 이미지 ACR에 등록
+## 과제 1. 이미지 ACR 등록
 
-Docker Hub 이미지를 본인의 ACR로 옮깁니다.
+Docker Hub에서 이미지를 가져와 본인의 ACR에 등록합니다.
 
-```bash
-# ACR 로그인
-az acr login --name <ACR이름>
+**요구 조건**
 
-# frontend
-docker pull skilleat/frontend:v4-kb5
-docker tag skilleat/frontend:v4-kb5 <ACR이름>.azurecr.io/mini-blog-frontend:v1
-docker push <ACR이름>.azurecr.io/mini-blog-frontend:v1
-
-# backend
-docker pull skilleat/backend:v4-kb5
-docker tag skilleat/backend:v4-kb5 <ACR이름>.azurecr.io/mini-blog-backend:v1
-docker push <ACR이름>.azurecr.io/mini-blog-backend:v1
-```
+- `skilleat/frontend:v4-kb5` → 본인 ACR에 push
+- `skilleat/backend:v4-kb5` → 본인 ACR에 push
 
 ---
 
-## 2단계. ACA에 backend 배포
+## 과제 2. ACA 배포
 
-| 항목 | 값 |
+아래 조건을 만족하도록 두 앱을 ACA에 배포합니다.
+
+**backend**
+
+| 조건 | 값 |
 |------|-----|
 | 앱 이름 | `backend-service` |
-| 이미지 | `<ACR이름>.azurecr.io/mini-blog-backend:v1` |
-| Ingress | **Internal** |
+| Ingress | Internal |
 | 포트 | `5000` |
-| 최소 replica | `2` |
-| 최대 replica | `2` |
+| replica | `1` (우선 1개로 시작) |
 
-!!! tip "앱 이름이 곧 hostname"
-    ACA 환경 내부에서는 **앱 이름이 hostname**이 됩니다.
-    frontend 이미지는 `backend-service`라는 이름으로 backend를 찾도록 설정되어 있으므로
-    반드시 앱 이름을 `backend-service`로 지정해야 합니다.
+**frontend**
 
----
-
-## 3단계. ACA에 frontend 배포
-
-| 항목 | 값 |
+| 조건 | 값 |
 |------|-----|
-| 앱 이름 | `mini-blog-web` |
-| 이미지 | `<ACR이름>.azurecr.io/mini-blog-frontend:v1` |
-| Ingress | **External** |
+| Ingress | External |
 | 포트 | `80` |
 
 ---
 
-## 4단계. 동작 확인
+## 과제 3. 동작 확인 및 문제 발견
 
-1. `mini-blog-web`의 외부 URL로 브라우저 접속
-2. 글 작성 폼에 제목과 내용 입력 → 등록
-3. 등록한 글이 화면에 출력되는지 확인
+frontend 외부 URL로 브라우저에 접속해서 글을 작성합니다.
 
----
+글이 정상적으로 등록되고 화면에 출력되는지 확인합니다.
 
-## 5단계. 문제 발견 — 데이터가 사라진다?
+**이제 backend replica를 2개로 늘려보세요.**
 
-여러 번 글을 작성하면서 브라우저를 **새로고침**해봅니다.
+replica를 늘린 뒤 글을 여러 건 작성하고 브라우저를 **반복해서 새로고침**합니다.
 
-글이 **나타났다 사라졌다** 하는 현상이 발생합니까?
-
-!!! question "왜 이런 현상이 발생할까요?"
-    backend가 **2개의 replica**로 실행 중입니다.
-    각 replica는 각자의 `/app/data.json`을 갖고 있습니다.
-    요청이 replica A에 도달하면 A의 데이터, replica B에 도달하면 B의 데이터가 반환됩니다.
-
-    ```
-    요청 1 → replica A → data.json (글 3개)
-    요청 2 → replica B → data.json (글 1개)  ← 다른 데이터!
-    ```
+!!! question "어떤 현상이 발생하나요?"
+    작성한 글이 새로고침할 때마다 나타났다 사라졌다 합니다.
+    왜 이런 현상이 발생하는지 생각해보세요.
 
 ---
 
-## 6단계. 볼륨으로 해결
+## 과제 4. 볼륨으로 문제 해결
 
-지금까지 배운 Azure Files 볼륨을 활용해서 이 문제를 해결합니다.
+발견한 문제를 **Azure Files 볼륨**으로 해결합니다.
 
-모든 replica가 **동일한 파일 공유**를 바라보면 데이터가 일치합니다.
+**요구 조건**
 
-```
-replica A ─┐
-           ├─→ Azure Files (data.json) ← 하나의 파일 공유
-replica B ─┘
-```
-
-**힌트:**
-
-- backend 컨테이너 내부 콘솔에서 `data.json`이 어느 경로에 저장되는지 확인하세요
-- 해당 경로에 Azure Files 볼륨을 마운트하면 됩니다
-- Step 1~4(Storage 생성 → File Share → 환경 등록 → 볼륨 마운트)는 본문 실습과 동일합니다
+- 모든 replica가 동일한 `data.json`을 바라보도록 구성
+- 볼륨 마운트 후 replica 2개 상태에서 글을 작성해도 새로고침 시 데이터가 유지될 것
 
 ---
 
@@ -140,10 +113,10 @@ replica B ─┘
 | 항목 | 확인 |
 |------|------|
 | Docker Hub 이미지를 ACR에 push 완료 | ☐ |
-| `backend-service` (Internal, 2 replica) 배포 완료 | ☐ |
-| `mini-blog-web` (External) 배포 완료 | ☐ |
+| `backend-service` (Internal, 포트 5000) 배포 완료 | ☐ |
+| `frontend` (External, 포트 80) 배포 완료 | ☐ |
 | 브라우저에서 글 작성 및 출력 확인 | ☐ |
-| 새로고침 시 데이터 불일치 현상 발견 | ☐ |
+| replica 2개 상태에서 데이터 불일치 현상 발견 | ☐ |
 | Azure Files 볼륨 마운트 후 데이터 일치 확인 | ☐ |
 
 ---
