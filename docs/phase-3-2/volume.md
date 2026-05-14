@@ -38,7 +38,7 @@ Azure Portal 콘솔로 컨테이너 내부에 직접 접속해서 주문 1건을
 python3 -c "
 import sqlite3
 conn = sqlite3.connect('/app/data/orders.db')
-conn.execute(\"INSERT INTO orders VALUES ('ORD-TEST-9999', 9999, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');\")
+conn.execute(\"INSERT INTO orders VALUES ('ORD-TEST-9999', 3030, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');\")
 conn.commit()
 count = conn.execute('SELECT COUNT(*) FROM orders;').fetchone()[0]
 print('주문 수:', count)
@@ -48,25 +48,17 @@ conn.close()
 
 `주문 수: 17` 이 나오면 정상 (기본 16건 + 추가 1건)
 
-삽입 후 브라우저 주소창에 아래 URL을 입력해 주문 수를 확인합니다:
-
-```
-https://<WEB_URL>/api/health
-```
-
-```json title="응답 예시"
-{"status": "ok", "orderCount": 17, ...}
-```
-
-`orderCount: 17` 이 보이면 데이터가 정상 저장된 것입니다.
+!!! tip "웹 메인 화면에서도 바로 확인 가능"
+    웹은 `userId=3030`의 주문만 표시합니다.
+    INSERT 시 userId를 **3030**으로 넣었으므로, hanbat-web을 새로고침하면 주문 목록에 **볼륨 테스트 상품**이 나타납니다.
 
 ### Step 0-2. 재시작 후 데이터 사라짐 확인
 
-orderCount가 17인 상태에서 컨테이너를 재시작합니다.
+웹에서 **볼륨 테스트 상품**이 보이는 상태에서 컨테이너를 재시작합니다.
 
 Portal → **hanbat-api** → **수정 버전 관리** → 현재 revision → **수정 버전 다시 시작**
 
-재시작 후 같은 URL을 다시 열면 **`orderCount: 16`으로 초기화**된 것을 확인할 수 있습니다.
+재시작 후 웹을 새로고침하면 **볼륨 테스트 상품이 사라지고 원래 목록으로 초기화**됩니다.
 
 !!! danger "볼륨이 없으면"
     재시작 시 DB 파일이 사라지고 seed 데이터(16건)로 초기화됩니다.
@@ -187,7 +179,7 @@ Portal → **hanbat-api** → **모니터링 > 콘솔 (Console)** → `hanbat-ap
 python3 -c "
 import sqlite3
 conn = sqlite3.connect('/app/data/orders.db')
-conn.execute(\"INSERT INTO orders VALUES ('ORD-TEST-9999', 9999, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');\")
+conn.execute(\"INSERT INTO orders VALUES ('ORD-TEST-9999', 3030, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');\")
 conn.commit()
 count = conn.execute('SELECT COUNT(*) FROM orders;').fetchone()[0]
 print('주문 수:', count)
@@ -200,9 +192,9 @@ conn.close()
 
 Portal → **hanbat-api** → **수정 버전 관리** → `hanbat-api--vol` → **수정 버전 다시 시작**
 
-**③ 재시작 후 확인**
+**③ 재시작 후 웹에서 확인**
 
-브라우저에서 `https://<WEB_URL>/api/health` 를 다시 열면 **`orderCount: 17`이 유지되면 볼륨 마운트 성공!**
+hanbat-web을 새로고침합니다 — **볼륨 테스트 상품이 그대로 남아있으면 볼륨 마운트 성공!**
 
 <div class="checkpoint">
 <div class="checkpoint-title">✅ 확인 포인트</div>
