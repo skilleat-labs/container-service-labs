@@ -119,21 +119,21 @@ Portal → **hanbat-api** → **수정 버전 관리** → 현재 revision → *
 ACA 볼륨을 사용하려면 먼저 **ACA 환경(Environment)** 에 Storage를 등록해야 합니다.
 
 1. Portal → **Container Apps 환경** → `hanbat-env`
-2. 왼쪽 메뉴 → **설정 > Azure Files**
+2. 왼쪽 메뉴 → **볼륨 탑재 (Volume mounts)**
 3. **+ 추가**
 
     | 항목 | 값 |
     |------|-----|
     | 이름 | `hanbat-files` |
-    | 스토리지 계정 | `hanbatstorage<숫자>` |
-    | 파일 공유 | `hanbat-data` |
+    | 서버 | `hanbatstorage<숫자>.file.core.windows.net` |
+    | 파일 공유 이름 | `/hanbatstorage<숫자>/hanbat-data` |
     | 액세스 모드 | ReadWrite |
 
 4. **추가** 클릭
 
-!!! tip "Storage Account Key 확인"
-    Storage Account → **보안 + 네트워킹 > 액세스 키** 에서 Key를 확인할 수 있습니다.
-    Portal에서 Storage를 선택하면 자동으로 Key를 가져옵니다.
+!!! tip "스토리지 계정 이름 확인"
+    Storage Account → **개요** 페이지 상단에서 스토리지 계정 이름을 확인할 수 있습니다.
+    서버 주소는 `<스토리지계정이름>.file.core.windows.net` 형식입니다.
 
 ---
 
