@@ -51,6 +51,7 @@ Smoke test 용도이므로 ACR의 **관리 사용자(Admin User)** 를 일시적
     | 항목 | 값 |
     |------|-----|
     | 네트워킹 유형 | 공용 |
+    | DNS 이름 레이블 | `hanbat-smoke-<임의 숫자>` (전역 유일) |
     | 포트 | `8080` / TCP |
 
 4. **모니터링** 탭으로 이동합니다
@@ -68,18 +69,20 @@ Smoke test 용도이므로 ACR의 **관리 사용자(Admin User)** 를 일시적
 
 ## Step 3. 동작 확인
 
-### IP 주소 확인
+### FQDN 확인
 
-ACI 왼쪽 메뉴 **설정** → **컨테이너** → **속성** 탭을 클릭합니다.
+ACI 개요 페이지에서 **FQDN** 값을 확인합니다.
 
-**IP 주소** 항목에서 공용 IP를 확인합니다.
+```
+hanbat-smoke-<숫자>.koreacentral.azurecontainer.io
+```
 
 ### 브라우저에서 확인
 
 브라우저 주소창에 아래 URL을 입력합니다.
 
 ```
-http://<IP 주소>:8080/version
+http://<FQDN>:8080/version
 ```
 
 아래와 같은 응답이 오면 이미지가 정상적으로 동작하는 겁니다.
@@ -94,8 +97,7 @@ http://<IP 주소>:8080/version
 <div class="checkpoint">
 <div class="checkpoint-title">✅ 확인 포인트</div>
 브라우저에서 <code>/version</code>이 JSON을 응답하나요?<br>
-응답이 보이면 ACR 이미지가 정상임이 확인된 겁니다.<br>
-확인이 끝나면 바로 Step 5로 넘어가 ACI를 삭제하세요.
+응답이 보이면 ACR 이미지가 정상임이 확인된 겁니다.
 </div>
 
 ---
