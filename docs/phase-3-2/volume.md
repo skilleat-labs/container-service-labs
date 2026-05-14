@@ -28,19 +28,25 @@ Azure Portal 콘솔로 컨테이너 내부에 직접 접속해서 주문 1건을
 2. 왼쪽 메뉴 → **모니터링 > 콘솔 (Console)**
 3. 컨테이너: `hanbat-api` 선택 → **연결 (Connect)**
 
-콘솔 창이 열리면 SQLite에 테스트 주문을 삽입합니다:
+콘솔 창이 열리면 Python으로 테스트 주문을 삽입합니다:
+
+!!! info "sqlite3 CLI 대신 Python 사용"
+    컨테이너 이미지에 `sqlite3` CLI가 포함되어 있지 않습니다.
+    Python FastAPI 앱이므로 Python 표준 라이브러리의 `sqlite3` 모듈을 사용합니다.
 
 ```bash title="콘솔"
-sqlite3 /app/data/orders.db \
-  "INSERT INTO orders VALUES ('ORD-TEST-9999', 9999, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');"
+python3 -c "
+import sqlite3
+conn = sqlite3.connect('/app/data/orders.db')
+conn.execute(\"INSERT INTO orders VALUES ('ORD-TEST-9999', 9999, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');\")
+conn.commit()
+count = conn.execute('SELECT COUNT(*) FROM orders;').fetchone()[0]
+print('주문 수:', count)
+conn.close()
+"
 ```
 
-주문 수 확인:
-
-```bash title="콘솔"
-sqlite3 /app/data/orders.db "SELECT COUNT(*) FROM orders;"
-# 17 이 나오면 정상 (기본 16건 + 추가 1건)
-```
+`주문 수: 17` 이 나오면 정상 (기본 16건 + 추가 1건)
 
 ### Step 0-2. 재시작 후 데이터 사라짐 확인
 
@@ -172,10 +178,16 @@ ACA 볼륨을 사용하려면 먼저 **ACA 환경(Environment)** 에 Storage를 
 Portal → **hanbat-api** → **모니터링 > 콘솔 (Console)** → `hanbat-api` 컨테이너 연결
 
 ```bash title="콘솔"
-sqlite3 /app/data/orders.db \
-  "INSERT INTO orders VALUES ('ORD-TEST-9999', 9999, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');"
-sqlite3 /app/data/orders.db "SELECT COUNT(*) FROM orders;"
-# 17 확인
+python3 -c "
+import sqlite3
+conn = sqlite3.connect('/app/data/orders.db')
+conn.execute(\"INSERT INTO orders VALUES ('ORD-TEST-9999', 9999, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');\")
+conn.commit()
+count = conn.execute('SELECT COUNT(*) FROM orders;').fetchone()[0]
+print('주문 수:', count)
+conn.close()
+"
+# 주문 수: 17 확인
 ```
 
 **② 재시작**
