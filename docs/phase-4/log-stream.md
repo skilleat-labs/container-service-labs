@@ -42,8 +42,8 @@ INFO:     10.0.0.1:12345 - "GET /health HTTP/1.1" 200 OK
 Traffic Split 중에 **v2 revision 로그만** 확인해봅니다.
 
 1. **hanbat-api** → **수정 버전 관리 (Revisions and replicas)**
-2. **hanbat-api--v2** 클릭
-3. 왼쪽 메뉴 → **로그 스트림**
+2. **hanbat-api--v2** 클릭 → 오른쪽에 패널이 열립니다
+3. 패널 상단 탭에서 **로그 스트림** 클릭
 
 특정 revision으로 들어온 요청만 필터링해서 볼 수 있습니다.
 
