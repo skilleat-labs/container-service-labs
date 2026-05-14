@@ -118,22 +118,29 @@ Portal → **hanbat-api** → **수정 버전 관리** → 현재 revision → *
 
 ACA 볼륨을 사용하려면 먼저 **ACA 환경(Environment)** 에 Storage를 등록해야 합니다.
 
-1. Portal → **Container Apps 환경** → `hanbat-env`
-2. 왼쪽 메뉴 → **볼륨 탑재 (Volume mounts)**
-3. **+ 추가**
+!!! info "Portal UI 대신 Cloud Shell 사용"
+    이 단계는 Portal UI 폼에 액세스 키 입력 필드가 없어 정상 등록이 되지 않습니다.
+    Portal 상단 **`>_`** 아이콘을 클릭해 **Cloud Shell**을 열고 아래 명령을 실행합니다.
+    이미 로그인된 상태라 별도 인증이 필요 없습니다.
 
-    | 항목 | 값 |
-    |------|-----|
-    | 이름 | `hanbat-files` |
-    | 서버 | `hanbatstorage<숫자>.file.core.windows.net` |
-    | 파일 공유 이름 | `/hanbatstorage<숫자>/hanbat-data` |
-    | 액세스 모드 | ReadWrite |
+**① 액세스 키 확인**
 
-4. **추가** 클릭
+Portal → **Storage Account** `hanbatstorage<숫자>` → **보안 + 네트워킹 > 액세스 키** → `key1` 복사
 
-!!! tip "스토리지 계정 이름 확인"
-    Storage Account → **개요** 페이지 상단에서 스토리지 계정 이름을 확인할 수 있습니다.
-    서버 주소는 `<스토리지계정이름>.file.core.windows.net` 형식입니다.
+**② Cloud Shell에서 등록**
+
+```bash title="Cloud Shell"
+az containerapp env storage set \
+  --name hanbat-env \
+  --resource-group skilleat-container-lab \
+  --storage-name hanbat-files \
+  --azure-file-account-name hanbatstorage<숫자> \
+  --azure-file-account-key <KEY1> \
+  --azure-file-share-name hanbat-data \
+  --access-mode ReadWrite
+```
+
+`"provisioningState": "Succeeded"` 가 나오면 등록 완료입니다.
 
 ---
 
