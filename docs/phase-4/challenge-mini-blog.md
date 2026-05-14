@@ -158,6 +158,6 @@ replica B ─┘
 ---
 
 <div class="nav-buttons">
-<a href="volume/" class="nav-btn">← 볼륨 실습</a>
-<a href="../../phase-4/" class="nav-btn next">Phase 4 →</a>
+<a href="auto-scale/" class="nav-btn">← 자동 확장</a>
+<a href="../phase-5/" class="nav-btn next">Phase 5 →</a>
 </div>
