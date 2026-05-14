@@ -14,6 +14,33 @@
 
 ---
 
+## 서비스 구조
+
+미니 블로그 서비스는 두 개의 컨테이너로 구성되어 있습니다.
+
+```
+브라우저
+  ↓ http://<VM_IP>:8080
+frontend (Nginx)
+  — 정적 페이지를 서빙하고
+  — 글 작성/조회 요청을 backend로 프록시
+  ↓ http://backend-service:5000
+backend (Flask)
+  — REST API 처리
+  — 게시글을 /app/data.json 파일에 저장/조회
+```
+
+| 컨테이너 | 역할 | 내부 포트 |
+|----------|------|----------|
+| frontend | Nginx — 페이지 서빙 + API 프록시 | 80 |
+| backend | Flask — REST API + 데이터 저장 | 5000 |
+
+!!! info "frontend가 backend를 찾는 방법"
+    frontend의 Nginx 설정에는 `backend-service`라는 이름으로 backend에 요청을 보내도록 되어 있습니다.
+    두 컨테이너가 **같은 네트워크**에 있어야 이름으로 통신할 수 있습니다.
+
+---
+
 ## 주어진 docker-compose.yml
 
 ```yaml title="docker-compose.yml"
