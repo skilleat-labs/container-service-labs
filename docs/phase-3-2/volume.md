@@ -22,28 +22,24 @@ hanbat-api는 주문 데이터를 `/app/data/orders.db` (SQLite)에 저장합니
 
 ### Step 0-1. 테스트 주문 추가
 
-컨테이너 내부에 직접 접속해서 주문 1건을 추가합니다.
+Azure Portal 콘솔로 컨테이너 내부에 직접 접속해서 주문 1건을 추가합니다.
 
-```bash title="터미널"
-az containerapp exec \
-  --name hanbat-api \
-  --resource-group skilleat-container-lab \
-  --command "sh"
-```
+1. Azure Portal → **hanbat-api** 선택
+2. 왼쪽 메뉴 → **모니터링 > 콘솔 (Console)**
+3. 컨테이너: `hanbat-api` 선택 → **연결 (Connect)**
 
-접속 후 SQLite에 테스트 주문 삽입:
+콘솔 창이 열리면 SQLite에 테스트 주문을 삽입합니다:
 
-```bash title="컨테이너 내부"
+```bash title="콘솔"
 sqlite3 /app/data/orders.db \
   "INSERT INTO orders VALUES ('ORD-TEST-9999', 9999, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');"
 ```
 
 주문 수 확인:
 
-```bash title="컨테이너 내부"
+```bash title="콘솔"
 sqlite3 /app/data/orders.db "SELECT COUNT(*) FROM orders;"
 # 17 이 나오면 정상 (기본 16건 + 추가 1건)
-exit
 ```
 
 ### Step 0-2. 재시작 후 데이터 사라짐 확인
@@ -173,20 +169,13 @@ ACA 볼륨을 사용하려면 먼저 **ACA 환경(Environment)** 에 Storage를 
 
 **① 테스트 주문 다시 추가**
 
-```bash title="터미널"
-az containerapp exec \
-  --name hanbat-api \
-  --resource-group skilleat-container-lab \
-  --revision hanbat-api--vol \
-  --command "sh"
-```
+Portal → **hanbat-api** → **모니터링 > 콘솔 (Console)** → `hanbat-api` 컨테이너 연결
 
-```bash title="컨테이너 내부"
+```bash title="콘솔"
 sqlite3 /app/data/orders.db \
   "INSERT INTO orders VALUES ('ORD-TEST-9999', 9999, '볼륨 테스트 상품', 99000, '결제완료', '2026-05-14', '2026-05-20');"
 sqlite3 /app/data/orders.db "SELECT COUNT(*) FROM orders;"
-# 17 확인 후
-exit
+# 17 확인
 ```
 
 **② 재시작**
