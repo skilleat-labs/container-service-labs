@@ -128,7 +128,7 @@ nav:
     - 로그 스트림 실습: phase-4/log-stream.md
     - 자동 재시작: phase-4/auto-restart.md
     - 자동 확장: phase-4/auto-scale.md
-    - '도전 과제: 미니 블로그 ACA 이관': phase-4/challenge-mini-blog.md
+  # - '도전 과제: 미니 블로그 ACA 이관': phase-4/challenge-mini-blog.md
   - 'Phase 5 · 의사결정':
     - Phase 5 개요: phase-5/index.md
     - 비교 매트릭스: phase-5/decision-matrix.md
