@@ -44,7 +44,7 @@ backend (Flask)
 | 서비스 | Docker Hub |
 |--------|------------|
 | frontend | `skilleat/frontend:v5-for-aca` |
-| backend | `skilleat/backend:v4-kb5` |
+| backend | `skilleat/backend:v5-for-aca` |
 
 ---
 
@@ -55,7 +55,7 @@ Docker Hub에서 이미지를 가져와 본인의 ACR에 등록합니다.
 **요구 조건**
 
 - `skilleat/frontend:v5-for-aca` → 본인 ACR에 push
-- `skilleat/backend:v4-kb5` → 본인 ACR에 push
+- `skilleat/backend:v5-for-aca` → 본인 ACR에 push
 
 ---
 
